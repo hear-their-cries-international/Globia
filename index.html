@@ -1,51 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Globia - Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Globia - Remote Jobs & Resources</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            font-size: 36px;
-            color: #007BFF;
-        }
-        p {
-            font-size: 18px;
-        }
-        .nav-btn {
-            margin: 20px;
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-        }
-        .remote {
-            background-color: #0056b3;
-            color: white;
-        }
-        .onsite {
-            background-color: #28a745;
-            color: white;
-        }
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; line-height: 1.6; background-color: #f4f4f4; }
+        header, footer { background: #003366; color: #fff; padding: 20px 0; text-align: center; }
+        main { padding: 20px; max-width: 900px; margin: auto; }
+        h1, h2 { color: #003366; }
+        section { margin-bottom: 40px; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+        a { color: #003366; text-decoration: none; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        video { width: 100%; max-height: 500px; margin-top: 10px; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <h1>🌐 Welcome to Globia</h1>
-    <p>Choose your pathway to start learning and find jobs:</p>
+<header>
+    <h1>Globia - Remote Jobs & Resources</h1>
+</header>
 
-    <button class="nav-btn remote" onclick="location.href='remote.html'">
-        Remote Jobs Pathway
-    </button>
+<main>
+    <!-- Introduction Section -->
+    <section id="intro">
+        <h2>Welcome to Globia</h2>
+        <p>Find the best remote and on-site job resources here, including sample resumes and training videos to guide you through the process.</p>
+    </section>
 
-    <button class="nav-btn onsite" onclick="location.href='onsite.html'">
-        On-Site Jobs Pathway
-    </button>
+    <!-- Video Section -->
+    <section id="video-section">
+        <h2>Watch Our Training Video</h2>
+        <video controls>
+            <source src="files/3044749UHD3840x2160_24fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <p>
+            If the video does not play, you can download it here: 
+            <a href="files/3044749UHD3840x2160_24fps.mp4" download>Download Video</a>
+        </p>
+    </section>
+
+    <!-- Sample Resume Section -->
+    <section id="resume-section">
+        <h2>Download Sample Resume</h2>
+        <p>
+            Access our professional resume template to help you apply for remote and on-site jobs: 
+            <a href="files/sample-resume.pdf" target="_blank">Download Resume PDF</a>
+        </p>
+    </section>
+
+    <!-- Skills / Lessons Section -->
+    <section id="skills">
+        <h2>Essential Skills for Remote Jobs</h2>
+        <ul>
+            <li>Data entry and management</li>
+            <li>Customer service & support</li>
+            <li>Medical billing & coding basics</li>
+            <li>Communication and time management</li>
+        </ul>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Globia. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
