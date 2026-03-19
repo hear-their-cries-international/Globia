@@ -3,147 +3,141 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Globia - Empower Your Career</title>
+<title>Globia - Learn & Work</title>
 <style>
-/* ==== GENERAL STYLING ==== */
-body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f4; line-height:1.6; }
-header, footer { background:#003366; color:#fff; text-align:center; padding:20px 0; }
-header img { width:50px; vertical-align:middle; margin-right:10px; }
-header h1 { display:inline; font-weight:bold; font-size:2rem; vertical-align:middle; }
-header p.motto { font-size:1rem; margin-top:5px; font-style:italic; color:#e0e0e0; }
-main { max-width:1100px; margin:auto; padding:20px; }
-section { background:#fff; padding:20px; margin-bottom:40px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-h2 { color:#003366; margin-top:0; }
-a { color:#003366; font-weight:bold; text-decoration:none; }
-a:hover { text-decoration:underline; }
-.video-level { margin-bottom:30px; }
-.video-level video { width:100%; max-height:500px; border-radius:5px; }
-.course-card { display:flex; align-items:flex-start; margin-bottom:20px; padding:15px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); background:#f9f9f9; position:relative; }
-.course-card img { width:60px; margin-right:15px; }
-.course-card .course-info { flex:1; }
-.course-card button.lock { background:#ccc; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; }
-.course-card button.lock:hover { background:#aaa; }
-.jobs-salary { font-size:0.95rem; color:#555; margin-top:5px; }
+  /* BODY */
+  body { font-family: 'Arial', sans-serif; margin:0; padding:0; background:#f0f4f8; }
 
-/* ==== LOCK OVERLAY ==== */
-.lock-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); color:#fff; justify-content:center; align-items:center; border-radius:8px; }
-.lock-overlay button { padding:10px 20px; font-size:1rem; border:none; border-radius:5px; background:gold; cursor:pointer; }
-.locked { position:relative; }
+  /* HEADER */
+  header {
+    background:#87CEEB; /* sky blue */
+    color:#fff; 
+    padding:30px 20px; 
+    display:flex; 
+    align-items:center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+  header img { width:60px; height:60px; margin-right:15px; }
+  header h1 {
+    font-size:3rem; 
+    font-weight:900;
+    background: linear-gradient(45deg, #ffcc00, #ff66cc, #00ffcc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin:0;
+  }
+  header p { width:100%; font-size:1.2rem; margin-left:75px; margin-top:5px; font-style:italic; color:#e0e0e0; }
+
+  /* SECTION */
+  section { padding:30px 20px; max-width:1200px; margin:auto; }
+  #courseSearch {
+    width:100%; padding:15px; margin-bottom:25px; border-radius:50px; 
+    border:1px solid #ccc; font-size:1.1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  /* COURSE CARDS */
+  #coursesContainer { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:25px; }
+  .course-card {
+    display:flex; flex-direction:column; align-items:center;
+    background:#fff; padding:20px; border-radius:25px; box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .course-card:hover { transform: translateY(-10px); box-shadow:0 15px 30px rgba(0,0,0,0.2); }
+  .course-icon img { width:100px; height:100px; object-fit:contain; margin-bottom:15px; }
+  .course-info h3 { margin:0 0 10px 0; font-size:1.5rem; text-align:center; color:#00BFFF; /* sky blue */ }
+  .course-info p { margin:5px 0; text-align:center; color:#333; }
+
+  /* VIDEO */
+  .video-container video { max-width:100%; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-top:10px; }
+
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
-<img src="files/globe.png" alt="Globe Icon">
-<h1>Globia</h1>
-<p class="motto">Empowering Your Career, Anywhere</p>
+  <img src="files/icons/globe.png" alt="Globia Logo">
+  <h1>Globia</h1>
+  <p>Empower Your Career</p>
 </header>
 
-<main>
-
-<!-- REMOTE JOBS -->
-<section id="remote-jobs">
-<h2>Remote Jobs</h2>
-<img src="files/remote-icon.png" alt="Remote Jobs Icon" style="width:50px;">
-<p class="jobs-salary">Available Jobs: 120 | Expected Salary: $2,500 - $4,500/month</p>
-</section>
-
-<!-- ON-SITE JOBS -->
-<section id="onsite-jobs">
-<h2>On-Site Jobs</h2>
-<img src="files/onsite-icon.png" alt="On-Site Jobs Icon" style="width:50px;">
-<p class="jobs-salary">Available Jobs: 85 | Expected Salary: $3,000 - $5,000/month</p>
-</section>
-
-<!-- COURSES -->
-<!-- SEARCH BAR -->
-<input type="text" id="courseSearch" placeholder="Search courses..." 
-       style="width:100%; padding:10px; margin-bottom:20px; border-radius:5px; border:1px solid #ccc; font-size:1rem;">
 <section id="courses">
-<h2>Our Courses</h2>
+  <h2 style="text-align:center; margin-bottom:20px; color:#00BFFF;">Our Courses</h2>
+  <input type="text" id="courseSearch" placeholder="Search courses...">
+  <div id="coursesContainer"></div>
+</section>
+
 <script>
-<script>
-/* ==== COURSES ARRAY ==== */
-var courses = [
+const courses = [
   {
     category: "Engineering",
-    icon: "files/engineering.png",
-    free: { price: "Free", jobs: 30, salary: "$2,500 - $3,500", videos:["files/eng_free1.mp4","files/eng_free2.mp4"] },
-    vip: { price: "$49.99", jobs: 45, salary: "$3,500 - $5,000", videos:["files/eng_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 60, salary: "$5,000 - $7,500", videos:["files/eng_vvip1.mp4"], locked:true }
+    icon: "files/icons/engineering.png",
+    free: { price: "Free", jobs: 10, salary: "$2,000 - $3,000", videos: [], description: "Learn engineering fundamentals." },
+    vip: { price: "$49.99", jobs: 15, salary: "$3,000 - $4,500", videos:["files/videos/eng_vip1.mp4"], locked:true },
+    vvip: { price: "$199.99", jobs: 20, salary: "$4,500 - $6,000", videos:["files/videos/eng_vvip1.mp4"], locked:true }
   },
   {
     category: "IT & Software",
-    icon: "files/it.png",
-    free: { price: "Free", jobs: 40, salary: "$2,500 - $4,000", videos:["files/it_free1.mp4"] },
-    vip: { price: "$49.99", jobs: 50, salary: "$4,000 - $5,500", videos:["files/it_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 70, salary: "$5,500 - $8,000", videos:["files/it_vvip1.mp4"], locked:true }
+    icon: "files/icons/it.png",
+    free: { price: "Free", jobs: 8, salary: "$2,200 - $3,200", videos: [], description: "Learn IT basics and programming." },
+    vip: { price: "$49.99", jobs: 12, salary: "$3,200 - $4,800", videos:["files/videos/it_vip1.mp4"], locked:true },
+    vvip: { price: "$199.99", jobs: 18, salary: "$4,800 - $6,200", videos:["files/videos/it_vvip1.mp4"], locked:true }
   },
   {
     category: "Health & Allied",
-    icon: "files/health.png",
-    free: { price: "Free", jobs: 25, salary: "$2,800 - $3,800", videos:["files/health_free1.mp4"] },
-    vip: { price: "$49.99", jobs: 35, salary: "$3,800 - $5,000", videos:["files/health_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 50, salary: "$5,000 - $7,500", videos:["files/health_vvip1.mp4"], locked:true }
+    icon: "files/icons/health.png",
+    free: { price: "Free", jobs: 6, salary: "$2,100 - $3,100", videos: [], description: "Healthcare fundamentals for beginners." },
+    vip: { price: "$49.99", jobs: 10, salary: "$3,100 - $4,500", videos:["files/videos/health_vip1.mp4"], locked:true },
+    vvip: { price: "$199.99", jobs: 14, salary: "$4,500 - $6,000", videos:["files/videos/health_vvip1.mp4"], locked:true }
   },
   {
     category: "Business & Management",
-    icon: "files/business.png",
-    free: { price: "Free", jobs: 20, salary: "$2,500 - $3,500", videos:["files/biz_free1.mp4"] },
-    vip: { price: "$49.99", jobs: 30, salary: "$3,500 - $5,000", videos:["files/biz_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 40, salary: "$5,000 - $6,500", videos:["files/biz_vvip1.mp4"], locked:true }
+    icon: "files/icons/business.png",
+    free: { price: "Free", jobs: 12, salary: "$2,500 - $3,500", videos: [], description: "Business basics and management skills." },
+    vip: { price: "$49.99", jobs: 18, salary: "$3,500 - $4,800", videos:["files/videos/biz_vip1.mp4"], locked:true },
+    vvip: { price: "$199.99", jobs: 22, salary: "$4,800 - $6,500", videos:["files/videos/biz_vvip1.mp4"], locked:true }
   },
   {
     category: "Creative Arts",
-    icon: "files/creative.png",
-    free: { price: "Free", jobs: 15, salary: "$2,200 - $3,200", videos:["files/creative_free1.mp4"] },
-    vip: { price: "$49.99", jobs: 25, salary: "$3,500 - $5,000", videos:["files/creative_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 35, salary: "$5,000 - $7,000", videos:["files/creative_vvip1.mp4"], locked:true }
+    icon: "files/icons/creative.png",
+    free: { price: "Free", jobs: 5, salary: "$2,000 - $3,000", videos: [], description: "Learn creative skills and design." },
+    vip: { price: "$49.99", jobs: 9, salary: "$3,000 - $4,500", videos:["files/videos/creative_vip1.mp4"], locked:true },
+    vvip: { price: "$199.99", jobs: 12, salary: "$4,500 - $6,000", videos:["files/videos/creative_vvip1.mp4"], locked:true }
   }
-  // ADD MORE COURSES HERE easily
 ];
 
-/* ==== GENERATE COURSES ==== */
-courses.forEach(function(c){
-  ["free","vip","vvip"].forEach(function(tier){
-    var course = c[tier];
-    var lockedClass = (course.locked) ? "locked" : "";
-    document.write(`
-      <div class="course-card ${lockedClass}">
-        <img src="${c.icon}" alt="${c.category} Icon">
-        <div class="course-info">
-          <h3>${c.category} - ${tier.toUpperCase()} (${course.price})</h3>
-          <p class="jobs-salary">Jobs: ${course.jobs} | Expected Salary: ${course.salary}</p>
-          ${course.videos.map(v=>`<video controls preload="metadata"><source src="${v}" type="video/mp4">Your browser does not support video.</video>`).join("")}
-        </div>
-        ${course.locked ? `<div class="lock-overlay" style="display:flex;"><button onclick="unlock(this)">Unlock</button></div>` : ""}
+const container = document.getElementById('coursesContainer');
+
+function renderCourses() {
+  container.innerHTML = "";
+  courses.forEach(course => {
+    const card = document.createElement('div');
+    card.className = 'course-card';
+    card.innerHTML = `
+      <div class="course-icon"><img src="${course.icon}" alt="${course.category}"></div>
+      <div class="course-info">
+        <h3>${course.category}</h3>
+        <p>Free: ${course.free.price} | Jobs: ${course.free.jobs} | Salary: ${course.free.salary}</p>
+        <p>${course.free.description || ""}</p>
+        ${course.free.videos.length > 0 ? course.free.videos.map(v => `<div class="video-container"><video controls><source src="${v}" type="video/mp4">Your browser does not support video.</video></div>`).join("") : ""}
       </div>
-    `);
+    `;
+    container.appendChild(card);
+  });
+}
+
+// Initial render
+renderCourses();
+
+// Search functionality
+document.getElementById('courseSearch').addEventListener('input', function() {
+  const filter = this.value.toLowerCase();
+  document.querySelectorAll('.course-card').forEach(card => {
+    const text = card.innerText.toLowerCase();
+    card.style.display = text.includes(filter) ? 'flex' : 'none';
   });
 });
-
-/* ==== UNLOCK FUNCTION ==== */
-function unlock(btn){
-  var overlay = btn.parentElement;
-  overlay.style.display = "none";
-  overlay.parentElement.classList.remove("locked");
-}
 </script>
-
-</section>
-
-<!-- RESUME -->
-<section id="resume">
-<h2>Sample Resume</h2>
-<p><a href="files/sample-resume.pdf" target="_blank">Download Resume PDF</a></p>
-</section>
-
-</main>
-
-<footer>
-<p>&copy; 2026 Globia. All rights reserved.</p>
-</footer>
 
 </body>
 </html>
