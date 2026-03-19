@@ -57,10 +57,22 @@ a:hover { text-decoration:underline; }
 </section>
 
 <!-- COURSES -->
+<!-- SEARCH BAR -->
+<input type="text" id="courseSearch" placeholder="Search courses..." 
+       style="width:100%; padding:10px; margin-bottom:20px; border-radius:5px; border:1px solid #ccc; font-size:1rem;">
 <section id="courses">
 <h2>Our Courses</h2>
-
 <script>
+<script>
+// FILTER COURSES
+document.getElementById('courseSearch').addEventListener('input', function() {
+    var filter = this.value.toLowerCase();
+    document.querySelectorAll('.course-card').forEach(function(card) {
+        var text = card.querySelector('.course-info h3').innerText.toLowerCase();
+        card.style.display = text.includes(filter) ? 'flex' : 'none';
+    });
+});
+</script>
 /* ==== COURSES ARRAY ==== */
 var courses = [
   {
