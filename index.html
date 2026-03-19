@@ -5,52 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Globia - Learn & Work</title>
 <style>
-  /* BODY */
-  body { font-family: 'Arial', sans-serif; margin:0; padding:0; background:#f0f4f8; }
+body { font-family: 'Arial', sans-serif; margin:0; padding:0; background:#f0f4f8; }
+header {
+  background:#87CEEB; color:#fff; padding:30px 20px; display:flex; align-items:center; flex-wrap:wrap;
+}
+header img { width:60px; height:60px; margin-right:15px; }
+header h1 {
+  font-size:3rem; font-weight:900; color:#ffffff;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+  margin:0;
+}
+header p {
+  width:100%; font-size:1.2rem; margin-left:75px; margin-top:5px;
+  font-style:italic; color:#e0e0e0;
+}
+section { padding:30px 20px; max-width:1200px; margin:auto; }
+#courseSearch { width:100%; padding:15px; margin-bottom:25px; border-radius:50px; border:1px solid #ccc; font-size:1.1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15); }
 
-  /* HEADER */
-  header {
-    background:#87CEEB; /* sky blue */
-    color:#fff; 
-    padding:30px 20px; 
-    display:flex; 
-    align-items:center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-  header img { width:60px; height:60px; margin-right:15px; }
-  header h1 {
-    font-size:3rem; 
-    font-weight:900;
-    background: linear-gradient(45deg, #ffcc00, #ff66cc, #00ffcc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin:0;
-  }
-  header p { width:100%; font-size:1.2rem; margin-left:75px; margin-top:5px; font-style:italic; color:#e0e0e0; }
-
-  /* SECTION */
-  section { padding:30px 20px; max-width:1200px; margin:auto; }
-  #courseSearch {
-    width:100%; padding:15px; margin-bottom:25px; border-radius:50px; 
-    border:1px solid #ccc; font-size:1.1rem; box-shadow:0 2px 6px rgba(0,0,0,0.15);
-  }
-
-  /* COURSE CARDS */
-  #coursesContainer { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:25px; }
-  .course-card {
-    display:flex; flex-direction:column; align-items:center;
-    background:#fff; padding:20px; border-radius:25px; box-shadow:0 10px 25px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-  .course-card:hover { transform: translateY(-10px); box-shadow:0 15px 30px rgba(0,0,0,0.2); }
-  .course-icon img { width:100px; height:100px; object-fit:contain; margin-bottom:15px; }
-  .course-info h3 { margin:0 0 10px 0; font-size:1.5rem; text-align:center; color:#00BFFF; /* sky blue */ }
-  .course-info p { margin:5px 0; text-align:center; color:#333; }
-
-  /* VIDEO */
-  .video-container video { max-width:100%; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-top:10px; }
-
+#coursesContainer { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:25px; }
+.course-card {
+  display:flex; flex-direction:column; align-items:center;
+  background:#fff; padding:20px; border-radius:25px; box-shadow:0 10px 25px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.course-card:hover { transform: translateY(-10px); box-shadow:0 15px 30px rgba(0,0,0,0.2); }
+.course-icon img { width:100px; height:100px; object-fit:contain; margin-bottom:15px; }
+.course-info h3 { margin:0 0 10px 0; font-size:1.5rem; text-align:center; color:#00BFFF; }
+.tier { display:flex; align-items:center; justify-content:center; margin:5px 0; font-weight:bold; }
+.tier img { width:25px; height:25px; margin-right:8px; }
+.course-info p { margin:5px 0; text-align:center; color:#333; }
+.video-container video { max-width:100%; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1); margin-top:10px; }
 </style>
 </head>
 <body>
@@ -68,46 +52,37 @@
 </section>
 
 <script>
+// Course Data
 const courses = [
-  {
-    category: "Engineering",
-    icon: "files/icons/engineering.png",
-    free: { price: "Free", jobs: 10, salary: "$2,000 - $3,000", videos: [], description: "Learn engineering fundamentals." },
-    vip: { price: "$49.99", jobs: 15, salary: "$3,000 - $4,500", videos:["files/videos/eng_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 20, salary: "$4,500 - $6,000", videos:["files/videos/eng_vvip1.mp4"], locked:true }
+  { category:"Engineering", icon:"files/icons/engineering.png",
+    free:{price:"Free", jobs:10, salary:"$2,000-$3,000", videos:[], description:"Learn engineering fundamentals.", icon:"files/icons/free.png"},
+    vip:{price:"$49.99", jobs:15, salary:"$3,000-$4,500", videos:["files/videos/eng_vip1.mp4"], icon:"files/icons/vip.png"},
+    vvip:{price:"$199.99", jobs:20, salary:"$4,500-$6,000", videos:["files/videos/eng_vvip1.mp4"], icon:"files/icons/vvip.png"}
   },
-  {
-    category: "IT & Software",
-    icon: "files/icons/it.png",
-    free: { price: "Free", jobs: 8, salary: "$2,200 - $3,200", videos: [], description: "Learn IT basics and programming." },
-    vip: { price: "$49.99", jobs: 12, salary: "$3,200 - $4,800", videos:["files/videos/it_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 18, salary: "$4,800 - $6,200", videos:["files/videos/it_vvip1.mp4"], locked:true }
+  { category:"IT & Software", icon:"files/icons/it.png",
+    free:{price:"Free", jobs:8, salary:"$2,200-$3,200", videos:[], description:"Learn IT basics and programming.", icon:"files/icons/free.png"},
+    vip:{price:"$49.99", jobs:12, salary:"$3,200-$4,800", videos:["files/videos/it_vip1.mp4"], icon:"files/icons/vip.png"},
+    vvip:{price:"$199.99", jobs:18, salary:"$4,800-$6,200", videos:["files/videos/it_vvip1.mp4"], icon:"files/icons/vvip.png"}
   },
-  {
-    category: "Health & Allied",
-    icon: "files/icons/health.png",
-    free: { price: "Free", jobs: 6, salary: "$2,100 - $3,100", videos: [], description: "Healthcare fundamentals for beginners." },
-    vip: { price: "$49.99", jobs: 10, salary: "$3,100 - $4,500", videos:["files/videos/health_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 14, salary: "$4,500 - $6,000", videos:["files/videos/health_vvip1.mp4"], locked:true }
+  { category:"Health & Allied", icon:"files/icons/health.png",
+    free:{price:"Free", jobs:6, salary:"$2,100-$3,100", videos:[], description:"Healthcare fundamentals for beginners.", icon:"files/icons/free.png"},
+    vip:{price:"$49.99", jobs:10, salary:"$3,100-$4,500", videos:["files/videos/health_vip1.mp4"], icon:"files/icons/vip.png"},
+    vvip:{price:"$199.99", jobs:14, salary:"$4,500-$6,000", videos:["files/videos/health_vvip1.mp4"], icon:"files/icons/vvip.png"}
   },
-  {
-    category: "Business & Management",
-    icon: "files/icons/business.png",
-    free: { price: "Free", jobs: 12, salary: "$2,500 - $3,500", videos: [], description: "Business basics and management skills." },
-    vip: { price: "$49.99", jobs: 18, salary: "$3,500 - $4,800", videos:["files/videos/biz_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 22, salary: "$4,800 - $6,500", videos:["files/videos/biz_vvip1.mp4"], locked:true }
+  { category:"Business & Management", icon:"files/icons/business.png",
+    free:{price:"Free", jobs:12, salary:"$2,500-$3,500", videos:[], description:"Business basics and management skills.", icon:"files/icons/free.png"},
+    vip:{price:"$49.99", jobs:18, salary:"$3,500-$4,800", videos:["files/videos/biz_vip1.mp4"], icon:"files/icons/vip.png"},
+    vvip:{price:"$199.99", jobs:22, salary:"$4,800-$6,500", videos:["files/videos/biz_vvip1.mp4"], icon:"files/icons/vvip.png"}
   },
-  {
-    category: "Creative Arts",
-    icon: "files/icons/creative.png",
-    free: { price: "Free", jobs: 5, salary: "$2,000 - $3,000", videos: [], description: "Learn creative skills and design." },
-    vip: { price: "$49.99", jobs: 9, salary: "$3,000 - $4,500", videos:["files/videos/creative_vip1.mp4"], locked:true },
-    vvip: { price: "$199.99", jobs: 12, salary: "$4,500 - $6,000", videos:["files/videos/creative_vvip1.mp4"], locked:true }
+  { category:"Creative Arts", icon:"files/icons/creative.png",
+    free:{price:"Free", jobs:5, salary:"$2,000-$3,000", videos:[], description:"Learn creative skills and design.", icon:"files/icons/free.png"},
+    vip:{price:"$49.99", jobs:9, salary:"$3,000-$4,500", videos:["files/videos/creative_vip1.mp4"], icon:"files/icons/vip.png"},
+    vvip:{price:"$199.99", jobs:12, salary:"$4,500-$6,000", videos:["files/videos/creative_vvip1.mp4"], icon:"files/icons/vvip.png"}
   }
 ];
 
+// Render Courses
 const container = document.getElementById('coursesContainer');
-
 function renderCourses() {
   container.innerHTML = "";
   courses.forEach(course => {
@@ -117,24 +92,28 @@ function renderCourses() {
       <div class="course-icon"><img src="${course.icon}" alt="${course.category}"></div>
       <div class="course-info">
         <h3>${course.category}</h3>
-        <p>Free: ${course.free.price} | Jobs: ${course.free.jobs} | Salary: ${course.free.salary}</p>
-        <p>${course.free.description || ""}</p>
-        ${course.free.videos.length > 0 ? course.free.videos.map(v => `<div class="video-container"><video controls><source src="${v}" type="video/mp4">Your browser does not support video.</video></div>`).join("") : ""}
+        <div class="tier"><img src="${course.free.icon}" alt="Free">Free: ${course.free.price} | Jobs: ${course.free.jobs} | Salary: ${course.free.salary}</div>
+        <p>${course.free.description}</p>
+        ${course.free.videos.map(v=>`<div class="video-container"><video controls><source src="${v}" type="video/mp4">Your browser does not support video.</video></div>`).join("")}
+        
+        <div class="tier"><img src="${course.vip.icon}" alt="VIP">VIP: ${course.vip.price} | Jobs: ${course.vip.jobs} | Salary: ${course.vip.salary}</div>
+        ${course.vip.videos.map(v=>`<div class="video-container"><video controls><source src="${v}" type="video/mp4">Your browser does not support video.</video></div>`).join("")}
+        
+        <div class="tier"><img src="${course.vvip.icon}" alt="VVIP">VVIP: ${course.vvip.price} | Jobs: ${course.vvip.jobs} | Salary: ${course.vvip.salary}</div>
+        ${course.vvip.videos.map(v=>`<div class="video-container"><video controls><source src="${v}" type="video/mp4">Your browser does not support video.</video></div>`).join("")}
       </div>
     `;
     container.appendChild(card);
   });
 }
-
-// Initial render
 renderCourses();
 
-// Search functionality
-document.getElementById('courseSearch').addEventListener('input', function() {
+// Search Function
+document.getElementById('courseSearch').addEventListener('input', function(){
   const filter = this.value.toLowerCase();
-  document.querySelectorAll('.course-card').forEach(card => {
+  document.querySelectorAll('.course-card').forEach(card=>{
     const text = card.innerText.toLowerCase();
-    card.style.display = text.includes(filter) ? 'flex' : 'none';
+    card.style.display = text.includes(filter) ? 'flex':'none';
   });
 });
 </script>
