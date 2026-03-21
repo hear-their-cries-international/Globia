@@ -1,1 +1,94 @@
-  
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobiaWorld Tourism</title>
+<style>
+body { font-family: Arial, sans-serif; margin:0; }
+nav {
+  background:#222;
+  padding:15px;
+  text-align:center;
+}
+nav a {
+  color:white;
+  margin:0 15px;
+  text-decoration:none;
+  font-weight:bold;
+}
+.hero {
+  height:60vh;
+  background:url('https://source.unsplash.com/1600x900/?africa,travel') center/cover;
+  color:white;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+.btn {
+  padding:12px 25px;
+  background:#ff7e5f;
+  color:white;
+  text-decoration:none;
+  border-radius:5px;
+  margin-top:15px;
+}
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+  padding:30px;
+}
+.card {
+  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  transition:0.3s;
+}
+.card:hover {
+  transform:translateY(-5px);
+}
+.card img { width:100%; height:150px; object-fit:cover; }
+.card h3 { text-align:center; padding:10px; }
+footer {
+  background:#222;
+  color:white;
+  text-align:center;
+  padding:15px;
+  margin-top:40px;
+}
+</style>
+</head>
+<body>
+
+<nav>
+<a href="/tourism/index.html">Home</a>
+<a href="/tourism/destinations.html">Destinations</a>
+<a href="/tourism/packages.html">Packages</a>
+<a href="/tourism/contact.html">Contact</a>
+</nav>
+
+<div class="hero">
+<h1>Explore the Magical World</h1>
+<p>Discover breathtaking destinations & get opportunities</p>
+<a href="/tourism/packages.html" class="btn">Start Your Journey</a>
+<a href="/tourism/contact.html" class="btn">Book Now</a>
+</div>
+
+<div class="grid">
+<div class="card"><img src="https://source.unsplash.com/400x300/?kenya"><h3>Kenya</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?south-africa"><h3>South Africa</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?tanzania"><h3>Tanzania</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?egypt"><h3>Egypt</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?nigeria"><h3>Nigeria</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?morocco"><h3>Morocco</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?uae"><h3>UAE</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?france"><h3>France</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?spain"><h3>Spain</h3></div>
+<div class="card"><img src="https://source.unsplash.com/400x300/?brazil"><h3>Brazil</h3></div>
+</div>
+
+<footer>© 2025 All rights reserved.</footer>
+
+</body>
+</html>
