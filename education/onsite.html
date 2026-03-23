@@ -12,6 +12,13 @@ header img { width:80px; height:80px; margin-right:20px; }
 header h1 { font-size:3.5rem; font-weight:900; color:#ffffff; text-shadow: 4px 4px 8px rgba(0,0,0,0.35); margin:0; }
 header p { width:100%; font-size:1.4rem; margin-top:15px; font-style:italic; color:#e0e0e0; text-align:center; }
 
+/* Responsive Header */
+@media(max-width:600px){
+    header h1 { font-size:2rem; }
+    header p { font-size:1rem; }
+    header img { width:60px; height:60px; margin-right:10px; }
+}
+
 /* Top rotating banner */
 #banner { display:flex; overflow:hidden; width:100%; background:#fff; border-radius:20px; margin:20px 0; height:180px; }
 #banner img { height:180px; flex-shrink:0; margin-right:10px; border-radius:15px; object-fit:cover; transition: transform 0.5s; }
@@ -46,11 +53,11 @@ footer { text-align:center; padding:30px 20px; background:#87CEEB; color:#fff; f
 
 <!-- Top Rotating Banner -->
 <div id="banner">
-  <img src="files/images/usa.jpg" alt="USA">
-  <img src="files/images/canada.jpg" alt="Canada">
-  <img src="files/images/europe.jpg" alt="Europe">
-  <img src="files/images/dubai.jpg" alt="Dubai">
-  <img src="files/images/uk.jpg" alt="UK">
+  <img src="files/images/usa.jpg" alt="USA On-Site Courses">
+  <img src="files/images/canada.jpg" alt="Canada On-Site Courses">
+  <img src="files/images/europe.jpg" alt="Europe On-Site Courses">
+  <img src="files/images/dubai.jpg" alt="Dubai On-Site Courses">
+  <img src="files/images/uk.jpg" alt="UK On-Site Courses">
 </div>
 
 <section id="courses">
@@ -60,26 +67,28 @@ footer { text-align:center; padding:30px 20px; background:#87CEEB; color:#fff; f
 </section>
 
 <script>
-// Banner Auto-Scroll
+// Smooth Banner Scroll
 const banner = document.getElementById('banner');
 let scrollPos = 0;
-setInterval(() => {
-  scrollPos += 1;
-  if(scrollPos > banner.scrollWidth - banner.clientWidth) scrollPos = 0;
-  banner.scrollLeft = scrollPos;
-}, 30);
+function scrollBanner() {
+    scrollPos += 1;
+    if(scrollPos > banner.scrollWidth - banner.clientWidth) scrollPos = 0;
+    banner.scrollLeft = scrollPos;
+    requestAnimationFrame(scrollBanner);
+}
+scrollBanner();
 
-// Courses Data
+// Courses Data with Fixed Tier Icons and Descriptions
 const courses = [
   { category:"Engineering On-Site", icon:"files/icons/engineering.png",
-    free:{price:"Free", jobs:8, salary:"$2,100-$3,300", videos:["files/videos/onsite_eng_free1.mp4"],  icon:"files/icons/free.png"},
-    vip:{price:"$49.99", jobs:12, salary:"$3,300-$4,800", videos:["files/videos/onsite_eng_vip1.mp4"], icon:"files/icons/vip.png"},
-    vvip:{price:"$199.99", jobs:18, salary:"$4,800-$6,200", videos:["files/videos/onsite_eng_vvip1.mp4"], icon:"files/icons/vvip.png"}
+    free:{price:"Free", jobs:8, salary:"$2,100-$3,300", videos:["files/videos/onsite_eng_free1.mp4"], description:"Introduction to Engineering on-site.", icon:"files/icons/free.png"},
+    vip:{price:"$49.99", jobs:12, salary:"$3,300-$4,800", videos:["files/videos/onsite_eng_vip1.mp4"], icon:"files/icons/vip.png", description:"Advanced Engineering practices."},
+    vvip:{price:"$199.99", jobs:18, salary:"$4,800-$6,200", videos:["files/videos/onsite_eng_vvip1.mp4"], icon:"files/icons/vvip.png", description:"Expert Engineering mentorship."}
   },
   { category:"Hospitality On-Site", icon:"files/icons/hospitality.png",
     free:{price:"Free", jobs:10, salary:"$1,800-$2,800", videos:[], description:"Introduction to Hospitality on-site.", icon:"files/icons/free.png"},
-    vip:{price:"$49.99", jobs:14, salary:"$2,800-$3,900", videos:["files/videos/onsite_hosp_vip1.mp4"], icon:"files/icons/vip.png"},
-    vvip:{price:"$199.99", jobs:19, salary:"$3,900-$5,500", videos:["files/videos/onsite_hosp_vvip1.mp4"], icon:"files/icons/vvip.png"}
+    vip:{price:"$49.99", jobs:14, salary:"$2,800-$3,900", videos:["files/videos/onsite_hosp_vip1.mp4"], icon:"files/icons/vip.png", description:"VIP Hospitality training."},
+    vvip:{price:"$199.99", jobs:19, salary:"$3,900-$5,500", videos:["files/videos/onsite_hosp_vvip1.mp4"], icon:"files/icons/vvip.png", description:"VVIP Hospitality mentorship."}
   }
 ];
 
@@ -94,14 +103,16 @@ function renderCourses() {
       <div class="course-icon"><img src="${course.icon}" alt="${course.category}"></div>
       <div class="course-info">
         <h3>${course.category}</h3>
-        <div class="tier"><img src="${course.free.icon}" alt="Free">Free: ${course.free.price} | Jobs: ${course.free.jobs} | Salary: ${course.free.salary}</div>
+        <div class="tier"><img src="${course.free.icon}" alt="Free Tier">Free: ${course.free.price} | Jobs: ${course.free.jobs} | Salary: ${course.free.salary}</div>
         <p>${course.free.description}</p>
-        <button class="view-more">Click to View More</button>
+        <button class="view-more" aria-label="Expand course details">Click to View More</button>
         <div class="course-details">
-          <div class="tier"><img src="${course.vip.icon}" alt="VIP">VIP: ${course.vip.price} | Jobs: ${course.vip.jobs} | Salary: ${course.vip.salary}</div>
-          ${course.vip.videos.map(v=>`<div class="video-container"><video controls><source src="${v}" type="video/mp4"></video></div>`).join("")}
-          <div class="tier"><img src="${course.vvip.icon}" alt="VVIP">VVIP: ${course.vvip.price} | Jobs: ${course.vvip.jobs} | Salary: ${course.vvip.salary}</div>
-          ${course.vvip.videos.map(v=>`<div class="video-container"><video controls><source src="${v}" type="video/mp4"></video></div>`).join("")}
+          <div class="tier"><img src="${course.vip.icon}" alt="VIP Tier">VIP: ${course.vip.price} | Jobs: ${course.vip.jobs} | Salary: ${course.vip.salary}</div>
+          <p>${course.vip.description}</p>
+          ${course.vip.videos.map(v=>`<div class="video-container"><video controls loading="lazy"><source src="${v}" type="video/mp4"></video></div>`).join("")}
+          <div class="tier"><img src="${course.vvip.icon}" alt="VVIP Tier">VVIP: ${course.vvip.price} | Jobs: ${course.vvip.jobs} | Salary: ${course.vvip.salary}</div>
+          <p>${course.vvip.description}</p>
+          ${course.vvip.videos.map(v=>`<div class="video-container"><video controls loading="lazy"><source src="${v}" type="video/mp4"></video></div>`).join("")}
         </div>
       </div>
     `;
@@ -123,18 +134,21 @@ function renderCourses() {
 }
 renderCourses();
 
-// Search Function
+// Search Function (filter by category only)
 document.getElementById('courseSearch').addEventListener('input', function(){
   const filter = this.value.toLowerCase();
   document.querySelectorAll('.course-card').forEach(card=>{
-    const text = card.innerText.toLowerCase();
+    const text = card.querySelector('.course-info h3').innerText.toLowerCase();
     card.style.display = text.includes(filter) ? 'flex':'none';
   });
 });
+
+// Dynamic Footer Year
+document.querySelector('footer div').textContent = `All rights reserved ©${new Date().getFullYear()} Globia`;
 </script>
 
 <footer>
-  <div>All rights reserved ©2025 Globia</div>
+  <div></div>
 </footer>
 
 </body>
