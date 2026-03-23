@@ -3,7 +3,14 @@
 <head>
 <title>Contact / Book Now</title>
 
-<style>
+<style><script>
+function clearForm() {
+    setTimeout(function() {
+        document.querySelector("form").reset();
+        alert("✅ Booking sent successfully!");
+    }, 100); 
+}
+</script>
 body { 
     font-family: Arial; 
     margin:0; 
