@@ -1,11 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Tourism</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Tourism</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1>Tourism Section</h1>
-<p>All your tourism content can go here.</p>
-<a href="index.html">Back to Home</a>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="conference.html">Conferences</a>
+<a href="tourism.html">Tourism</a>
+</nav>
+
+<section class="hero">
+<h1>Explore Global Destinations</h1>
+<p>Your next adventure starts here</p>
+<a href="#loginBox" class="btn">Login / Register</a>
+<a href="#tours" class="btn">View Tours</a>
+</section>
+
+<section class="section" id="loginBox">
+<h2>Login / Register</h2>
+<input type="text" id="username" placeholder="Username">
+<input type="password" id="password" placeholder="Password">
+<button class="btn" onclick="login()">Login / Register</button>
+<p id="loginMsg"></p>
+</section>
+
+<section class="section" id="tours">
+<h2>Featured Tours</h2>
+<div class="grid" id="tourContainer"></div>
+</section>
+
+<section class="section" id="booking" style="display:none;">
+<h2>Book Your Trip</h2>
+<form id="bookingForm">
+<input type="text" id="fullName" placeholder="Full Name">
+<input type="email" id="email" placeholder="Email">
+<select id="tourSelect"></select>
+<select id="ticket">
+<option value="0">Regular</option>
+<option value="150">VIP ($150)</option>
+<option value="300">Premium ($300)</option>
+</select>
+<button class="btn">Pay & Book</button>
+</form>
+</section>
+
+<div class="chatbox">
+<div class="chat-header">AI Travel Assistant</div>
+<div class="chat-body" id="chatBody"></div>
+<div class="chat-input">
+<input id="chatInput" placeholder="Ask about tours...">
+<button onclick="sendMessage()">Send</button>
+</div>
+</div>
+
+<footer>
+&copy; 2026 Global Tourism
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+let loggedIn = false;
+function login() {
+  const user = document.getElementById("username").value;
+  const pass = document.getElementById("password").value;
+  if(!user||!pass){ document.getElementById("loginMsg").innerText="Enter credentials"; return; }
+  localStorage.setItem("user", user);
+  loggedIn=true;
+  document.getElementById("loginMsg").innerText="Welcome, "+user+"!";
+  document.getElementById("booking").style.display="block";
+}
+
+async function loadTours(){
+  const res = await fetch("http://localhost:5000/events");
+  const tours = await res.json();
+  let container = document.getElementById("tourContainer");
+  let select = document.getElementById("tourSelect");
+  container.innerHTML = "";
+  select.innerHTML = "";
+  tours.forEach((tour,i)=>{
+    container.innerHTML += `
+      <div class="card">
+        <h3>${tour.name}</h3>
+        <p>${tour.location} | ${tour.date}</p>
+        <div class="ad-box">${tour.description || "Experience unforgettable tours."}</div>
+        ${tour.video ? `<video controls src="videos/${tour.video}"></video>` : ""}
+      </div>`;
+    select.innerHTML += `<option value="${i}">${tour.name}</option>`;
+  });
+}
+loadTours();
+
+const stripe = Stripe("YOUR_PUBLIC_KEY");
+document.getElementById("bookingForm").addEventListener("submit", async e=>{
+  e.preventDefault();
+  if(!loggedIn){ alert("Please login first"); return; }
+  const price = document.getElementById("ticket").value;
+  const res = await fetch("http://localhost:5000/create-checkout-session",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({price})
+  });
+  const data = await res.json();
+  stripe.redirectToCheckout({ sessionId: data.id });
+});
+
+async function sendMessage(){
+  const msg = document.getElementById("chatInput").value;
+  const chat = document.getElementById("chatBody");
+  if(!msg) return;
+  chat.innerHTML += "<p><b>You:</b> "+msg+"</p>";
+  const res = await fetch("http://localhost:5000/chat",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({message: msg})
+  });
+  const data = await res.json();
+  chat.innerHTML += "<p><b>AI:</b> "+data.reply+"</p>";
+  document.getElementById("chatInput").value="";
+  chat.scrollTop = chat.scrollHeight;
+}
+</script>
+
 </body>
 </html>
