@@ -1,1 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin</title>
+</head>
+<body>
 
+<h2>Add Conference</h2>
+
+<input id="name" placeholder="Name">
+<input id="date" placeholder="Date">
+<input id="location" placeholder="Location">
+<input id="desc" placeholder="Description">
+
+<button onclick="add()">Add</button>
+
+<div id="list"></div>
+
+<script>
+async function load(){
+const res = await fetch("http://localhost:5000/events");
+const data = await res.json();
+
+let html="";
+data.forEach((e,i)=>{
+html+=`<p>${e.name} <button onclick="del(${i})">Delete</button></p>`;
+});
+document.getElementById("list").innerHTML=html;
+}
+
+async function add(){
+await fetch("http://localhost:5000/add-event",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+name:document.getElementById("name").value,
+date:document.getElementById("date").value,
+location:document.getElementById("location").value,
+description:document.getElementById("desc").value
+})
+});
+load();
+}
+
+async function del(i){
+await fetch("http://localhost:5000/delete-event",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({index:i})
+});
+load();
+}
+
+load();
+</script>
+
+</body>
+</html>
