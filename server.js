@@ -9,27 +9,24 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const openai = new OpenAI({ apiKey: "YOUR_OPENAI_API_KEY" });
-let events = []; // store conferences + tours
 
-// Add event
+let events = []; // stores tours & conferences
+
 app.post("/add-event",(req,res)=>{
   events.push(req.body);
   res.json({message:"Event added"});
 });
-// Get events
 app.get("/events",(req,res)=>res.json(events));
-// Delete event
 app.post("/delete-event",(req,res)=>{
   events.splice(req.body.index,1);
   res.json({message:"Deleted"});
 });
 
-// Stripe checkout
 app.post("/create-checkout-session", async (req,res)=>{
   const session = await stripe.checkout.sessions.create({
     payment_method_types:["card"],
     line_items:[{
-      price_data:{ currency:"usd", product_data:{name:"Booking"}, unit_amount:req.body.price*100 },
+      price_data:{currency:"usd", product_data:{name:"Booking"}, unit_amount:req.body.price*100},
       quantity:1
     }],
     mode:"payment",
@@ -39,7 +36,6 @@ app.post("/create-checkout-session", async (req,res)=>{
   res.json({id:session.id});
 });
 
-// AI Chat
 app.post("/chat", async (req,res)=>{
   const completion = await openai.chat.completions.create({
     model:"gpt-4o-mini",
