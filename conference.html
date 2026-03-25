@@ -4,8 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Conferences</title>
-<link rel="stylesheet" href="css/style.css">
+
+<style>
+body { margin:0; font-family:Arial; background:#f4f4f4; }
+
+nav { background:#0a1f44; padding:15px; text-align:center; }
+nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
+
+.hero {
+    height:50vh;
+    background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+               url('images/conference1.jpg') center/cover;
+    display:flex; justify-content:center; align-items:center;
+    color:white; font-size:2em;
+}
+
+.section { padding:40px; text-align:center; }
+
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.card {
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+    text-align:left;
+}
+
+.ad-box {
+    background:#0a1f44;
+    color:white;
+    padding:10px;
+    margin-top:10px;
+    border-radius:8px;
+}
+
+video { width:100%; margin-top:10px; border-radius:10px; }
+
+footer { background:#0a1f44; color:white; padding:20px; text-align:center; }
+</style>
 </head>
+
 <body>
 
 <nav>
@@ -14,36 +57,35 @@
 <a href="tourism.html">Tourism</a>
 </nav>
 
-<section class="hero">
-<h1>International Conferences</h1>
-<p>Multi-country & professional conferences with advertising</p>
-</section>
+<div class="hero">International Conferences</div>
 
-<section class="section" id="conferences">
+<section class="section">
 <h2>Upcoming Conferences</h2>
-<div class="grid" id="conferenceContainer">
-<!-- Dynamically loaded conferences -->
-</div>
+<div class="grid" id="conferenceContainer"></div>
 </section>
 
-<footer>
-&copy; 2026 Global Conferences
-</footer>
+<footer>© 2026 Global Conferences</footer>
 
 <script>
 async function loadConferences(){
   const res = await fetch("http://localhost:5000/events");
   const events = await res.json();
-  const container = document.getElementById("conferenceContainer");
-  container.innerHTML = "";
+
+  let container = document.getElementById("conferenceContainer");
+  container.innerHTML="";
+
   events.forEach(e=>{
     container.innerHTML += `
-      <div class="card">
-        <h3>${e.name}</h3>
-        <p>${e.location} | ${e.date}</p>
-        <div class="ad-box">${e.description || "Professional conference experience."}</div>
-        ${e.video ? `<video controls src="videos/${e.video}"></video>` : ""}
+    <div class="card">
+      <h3>${e.name}</h3>
+      <p>${e.location} | ${e.date}</p>
+
+      <div class="ad-box">
+        ${e.description || "Professional international conference."}
       </div>
+
+      ${e.video ? `<video controls src="videos/${e.video}"></video>` : ""}
+    </div>
     `;
   });
 }
