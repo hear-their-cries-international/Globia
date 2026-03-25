@@ -1,47 +1,39 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-const stripe = require("stripe")("YOUR_STRIPE_SECRET_KEY");
-const OpenAI = require("openai");
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-const openai = new OpenAI({ apiKey: "YOUR_OPENAI_API_KEY" });
+let events = [
+  {
+    name: "Dubai Tech Conference",
+    location: "UAE",
+    date: "2026-06-10",
+    description: "A global technology conference.",
+    video: "conf1.mp4"
+  },
+  {
+    name: "London Business Summit",
+    location: "UK",
+    date: "2026-08-20",
+    description: "Top business leaders meet.",
+    video: "conf2.mp4"
+  }
+];
 
-let events = []; // stores tours & conferences
+let bookings = [];
 
-app.post("/add-event",(req,res)=>{
-  events.push(req.body);
-  res.json({message:"Event added"});
-});
-app.get("/events",(req,res)=>res.json(events));
-app.post("/delete-event",(req,res)=>{
-  events.splice(req.body.index,1);
-  res.json({message:"Deleted"});
-});
-
-app.post("/create-checkout-session", async (req,res)=>{
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types:["card"],
-    line_items:[{
-      price_data:{currency:"usd", product_data:{name:"Booking"}, unit_amount:req.body.price*100},
-      quantity:1
-    }],
-    mode:"payment",
-    success_url:"http://localhost:3000",
-    cancel_url:"http://localhost:3000"
-  });
-  res.json({id:session.id});
+/* GET EVENTS */
+app.get("/events",(req,res)=>{
+  res.json(events);
 });
 
-app.post("/chat", async (req,res)=>{
-  const completion = await openai.chat.completions.create({
-    model:"gpt-4o-mini",
-    messages:[{role:"user", content:req.body.message}]
-  });
-  res.json({reply:completion.choices[0].message.content});
+/* SAVE BOOKING */
+app.post("/book",(req,res)=>{
+  bookings.push(req.body);
+  console.log("Booking:", req.body);
+  res.json({message:"Saved"});
 });
 
 app.listen(5000,()=>console.log("Server running on 5000"));
