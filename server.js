@@ -12,7 +12,7 @@ let events = [
     location: "Dubai",
     date: "May 20",
     description: "AI & Innovation",
-    video: "videos/tech.mp4"
+    video: "tech.mp4"
   },
   {
     name: "Business Summit",
