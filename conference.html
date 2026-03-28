@@ -101,9 +101,9 @@ input, select {
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 
 <script>
-/* ✅ INIT EMAILJS */
+/* ✅ INIT EMAILJS (YOUR REAL KEY) */
 (function(){
-  emailjs.init("YOUR_PUBLIC_KEY");
+  emailjs.init("Q14OcvMEllcm_ojdV");
 })();
 
 let eventsData = [];
@@ -157,7 +157,7 @@ document.getElementById("bookingForm").addEventListener("submit", function(e){
  const event = eventsData[document.getElementById("eventSelect").value];
  const ticket = document.getElementById("ticket").value;
 
- emailjs.send("YOUR_SERVICE_ID","YOUR_TEMPLATE_ID",{
+ emailjs.send("service_u86yppn","template_dl2fdt8",{
   name: name,
   email: email,
   event: event.name,
@@ -165,9 +165,10 @@ document.getElementById("bookingForm").addEventListener("submit", function(e){
  })
  .then(function(response){
   document.getElementById("confirmation").innerText =
-   `✅ Booking sent successfully!`;
+   "✅ Booking sent successfully!";
  })
  .catch(function(error){
+  console.log("EmailJS ERROR:", error);
   alert("❌ Failed to send booking");
  });
 
