@@ -9,12 +9,12 @@
 body { margin:0; font-family:Arial; background:#f4f4f4; }
 
 nav { background:#0a1f44; padding:15px; text-align:center; }
-nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
+nav a { color:white; margin:0 15px; text-decoration:none; }
 
 .hero {
   height:50vh;
   background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-             url('images/conference1.jpg') center/cover;
+  url('images/conference1.jpg') center/cover;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -37,12 +37,6 @@ nav a { color:white; margin:0 15px; text-decoration:none; font-weight:bold; }
   box-shadow:0 0 8px rgba(0,0,0,0.1);
 }
 
-video {
-  width:100%;
-  margin-top:10px;
-  border-radius:8px;
-}
-
 input, select {
   width:100%;
   padding:10px;
@@ -54,7 +48,6 @@ input, select {
   color:white;
   padding:10px;
   border:none;
-  cursor:pointer;
 }
 </style>
 </head>
@@ -68,7 +61,6 @@ input, select {
 
 <section class="hero">
 <h1>International Conferences</h1>
-<p>Connect • Learn • Grow</p>
 </section>
 
 <section class="section">
@@ -86,31 +78,41 @@ input, select {
 <select id="eventSelect"></select>
 
 <select id="ticket">
-<option value="Regular">Regular</option>
-<option value="VIP">VIP</option>
-<option value="VVIP">VVIP</option>
+<option>Regular</option>
+<option>VIP</option>
+<option>VVIP</option>
 </select>
 
-<button class="btn">Confirm Booking</button>
+<button class="btn">Book Now</button>
 </form>
 
-<p id="confirmation" style="color:green;"></p>
+<p id="confirmation"></p>
 </section>
 
-<!-- ✅ EMAILJS SCRIPT -->
+<hr>
+
+<section class="section">
+<h2>AI Assistant</h2>
+
+<input id="aiInput" placeholder="Ask something...">
+<button onclick="ask()">Ask AI</button>
+
+<p id="aiOutput"></p>
+</section>
+
 <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script src="js/ai.js"></script>
 
 <script>
-/* ✅ INIT EMAILJS (YOUR REAL KEY) */
+// EMAIL INIT
 (function(){
   emailjs.init("Q14OcvMEllcm_ojdV");
 })();
 
 let eventsData = [];
 
-/* LOAD EVENTS */
+// LOAD EVENTS
 async function loadEvents(){
- try {
   const res = await fetch("/events");
   const events = await res.json();
 
@@ -125,55 +127,50 @@ async function loadEvents(){
   events.forEach((e,i)=>{
 
     container.innerHTML += `
-    <div class="card">
-      <h3>${e.name}</h3>
-      <p>${e.location} | ${e.date}</p>
-      <p>${e.description}</p>
-
-      ${e.video ? `
-      <video controls>
-        <source src="${e.video}" type="video/mp4">
-      </video>
-      ` : ""}
-    </div>
+      <div class="card">
+        <h3>${e.name}</h3>
+        <p>${e.location} | ${e.date}</p>
+        <p>${e.description}</p>
+      </div>
     `;
 
     select.innerHTML += `<option value="${i}">${e.name}</option>`;
   });
-
- } catch(err){
-  console.log("Error loading events", err);
- }
 }
 
 loadEvents();
 
-/* 🔥 BOOKING WITH EMAIL */
+// BOOKING
 document.getElementById("bookingForm").addEventListener("submit", function(e){
  e.preventDefault();
 
- const name = document.getElementById("name").value;
- const email = document.getElementById("email").value;
- const event = eventsData[document.getElementById("eventSelect").value];
- const ticket = document.getElementById("ticket").value;
+ const name = nameInput.value;
+ const email = emailInput.value;
+ const event = eventsData[eventSelect.value];
+ const ticket = ticketSelect.value;
 
  emailjs.send("service_u86yppn","template_dl2fdt8",{
-  name: name,
-  email: email,
+  name,
+  email,
   event: event.name,
-  ticket: ticket
+  ticket
  })
- .then(function(response){
-  document.getElementById("confirmation").innerText =
-   "✅ Booking sent successfully!";
+ .then(()=>{
+  confirmation.innerText = "✅ Booking sent!";
  })
- .catch(function(error){
-  console.log("EmailJS ERROR:", error);
+ .catch(()=>{
   alert("❌ Failed to send booking");
  });
 
- document.getElementById("bookingForm").reset();
+ this.reset();
 });
+
+// AI FUNCTION
+async function ask(){
+  const input = document.getElementById("aiInput").value;
+  const res = await askAI(input);
+  document.getElementById("aiOutput").innerText = res;
+}
 </script>
 
 </body>
