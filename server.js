@@ -2,9 +2,15 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
+
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname)); // SERVE videos & images
+
+// ✅ Serve all static files (HTML, CSS, images, videos, etc.)
+app.use(express.static(__dirname));
+
+// ✅ IMPORTANT FIX: explicitly serve the videos folder
+app.use("/videos", express.static(__dirname + "/videos"));
 
 let events = [
   {
@@ -23,11 +29,18 @@ let events = [
   }
 ];
 
-app.get("/events", (req,res)=> res.json(events));
-
-app.post("/book", (req,res)=>{
-  console.log(req.body);
-  res.json({message:"Booked"});
+// GET events
+app.get("/events", (req, res) => {
+  res.json(events);
 });
 
-app.listen(5000, ()=> console.log("Running on 5000"));
+// POST booking
+app.post("/book", (req, res) => {
+  console.log("Booking received:", req.body);
+  res.json({ message: "Booked successfully" });
+});
+
+// Start server
+app.listen(5000, () => {
+  console.log("Server running on http://localhost:5000");
+});
