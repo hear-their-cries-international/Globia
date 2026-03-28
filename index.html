@@ -3,10 +3,21 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="widt<script src="js/ai.js"></script>
+
+<script>
+function openAI(){
+ let msg = prompt("Ask AI:");
+ if(!msg) return;
+
+ askAI(msg).then(res=>{
+  alert(res);
+ });
+}
+</script>h=device-width, initial-scale=1.0">
 <title>Global Platform</title>
 <style>
-/* Reset & basic styles */
+/* Reset & basic styles */  
 body {
   margin: 0;
   font-family: Arial, sans-serif;
