@@ -7,46 +7,44 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* ✅ Serve static frontend files */
+/* ✅ Serve all static files */
 app.use(express.static(path.join(__dirname)));
 
-/* ✅ Serve videos from /videos */
+/* ✅ Serve videos folder correctly */
 app.use("/videos", express.static(path.join(__dirname, "videos")));
 
-/* Sample events data */
+/* EVENTS DATA */
 let events = [
   {
     name: "Tech Conference 2026",
     location: "Dubai",
     date: "May 20",
     description: "AI & Innovation",
-    video: "/videos/tech.mp4" // ✅ FIXED PATH
+    video: "/videos/tech.mp4"
   },
   {
     name: "Business Summit",
     location: "London",
     date: "June 10",
     description: "Entrepreneurship",
-    video: "" // no video
+    video: ""
   }
 ];
 
-/* GET events */
+/* GET EVENTS */
 app.get("/events", (req, res) => {
   res.json(events);
 });
 
-/* POST booking */
+/* BOOKING */
 app.post("/book", (req, res) => {
   console.log("Booking received:", req.body);
   res.json({ message: "Booked successfully" });
 });
 
-/* Start server */
+/* START SERVER */
 const PORT = process.env.PORT || 10000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
