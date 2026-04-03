@@ -13,8 +13,7 @@ nav a { color:white; margin:0 15px; text-decoration:none; }
 
 .hero {
   height:50vh;
-  background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-  url('images/conference1.jpg') center/cover;
+  background:#222;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -35,6 +34,12 @@ nav a { color:white; margin:0 15px; text-decoration:none; }
   padding:15px;
   border-radius:10px;
   box-shadow:0 0 8px rgba(0,0,0,0.1);
+}
+
+video {
+  width:100%;
+  margin-top:10px;
+  border-radius:8px;
 }
 
 input, select {
@@ -72,12 +77,12 @@ input, select {
 <h2>Book Your Seat</h2>
 
 <form id="bookingForm">
-<input id="name" placeholder="Full Name" required>
-<input id="email" placeholder="Email" required>
+<input id="nameInput" placeholder="Full Name" required>
+<input id="emailInput" placeholder="Email" required>
 
 <select id="eventSelect"></select>
 
-<select id="ticket">
+<select id="ticketSelect">
 <option>Regular</option>
 <option>VIP</option>
 <option>VVIP</option>
@@ -89,8 +94,6 @@ input, select {
 <p id="confirmation"></p>
 </section>
 
-<hr>
-
 <section class="section">
 <h2>AI Assistant</h2>
 
@@ -100,20 +103,14 @@ input, select {
 <p id="aiOutput"></p>
 </section>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script src="js/ai.js"></script>
-
 <script>
-// EMAIL INIT
-(function(){
-  emailjs.init("Q14OcvMEllcm_ojdV");
-})();
+const BASE_URL = "https://YOUR-RAILWAY-URL.up.railway.app"; // 🔥 replace later
 
 let eventsData = [];
 
-// LOAD EVENTS
+/* LOAD EVENTS */
 async function loadEvents(){
-  const res = await fetch("/events");
+  const res = await fetch(`${BASE_URL}/events`);
   const events = await res.json();
 
   eventsData = events;
@@ -131,6 +128,10 @@ async function loadEvents(){
         <h3>${e.name}</h3>
         <p>${e.location} | ${e.date}</p>
         <p>${e.description}</p>
+
+        <video controls>
+          <source src="${BASE_URL}${e.video}" type="video/mp4">
+        </video>
       </div>
     `;
 
@@ -140,38 +141,43 @@ async function loadEvents(){
 
 loadEvents();
 
-// BOOKING
-document.getElementById("bookingForm").addEventListener("submit", function(e){
+/* BOOKING */
+document.getElementById("bookingForm").addEventListener("submit", async (e)=>{
  e.preventDefault();
 
- const name = nameInput.value;
- const email = emailInput.value;
- const event = eventsData[eventSelect.value];
- const ticket = ticketSelect.value;
+ const name = document.getElementById("nameInput").value;
+ const email = document.getElementById("emailInput").value;
+ const event = eventsData[document.getElementById("eventSelect").value];
+ const ticket = document.getElementById("ticketSelect").value;
 
- emailjs.send("service_u86yppn","template_dl2fdt8",{
-  name,
-  email,
-  event: event.name,
-  ticket
- })
- .then(()=>{
-  confirmation.innerText = "✅ Booking sent!";
- })
- .catch(()=>{
-  alert("❌ Failed to send booking");
+ await fetch(`${BASE_URL}/book`, {
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({name,email,event:event.name,ticket})
  });
 
- this.reset();
+ document.getElementById("confirmation").innerText = "✅ Booking successful!";
+ e.target.reset();
 });
 
-// AI FUNCTION
+/* AI */
 async function ask(){
-  const input = document.getElementById("aiInput").value;
-  const res = await askAI(input);
-  document.getElementById("aiOutput").innerText = res;
+ const input = document.getElementById("aiInput").value;
+
+ const res = await fetch(`${BASE_URL}/ai`, {
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message:input})
+ });
+
+ const data = await res.json();
+ document.getElementById("aiOutput").innerText = data.reply;
 }
 </script>
 
 </body>
 </html>
+
+
+
+
