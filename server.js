@@ -9,14 +9,14 @@ const app = express();
    MIDDLEWARE
 ========================= */
 app.use(cors({
-  origin: "*", // allow all (you can restrict later)
+  origin: "*",
 }));
 app.use(express.json());
 
 /* =========================
-   STATIC FILES (LOCAL ONLY)
+   STATIC FILES (FOR LOCAL ONLY)
 ========================= */
-app.use(express.static(__dirname));
+app.use(express.static(path.join(__dirname)));
 app.use("/videos", express.static(path.join(__dirname, "videos")));
 
 /* =========================
@@ -35,7 +35,7 @@ const events = [
     location: "London",
     date: "June 10",
     description: "Entrepreneurship",
-    video: "/videos/business.mp4" // make sure file exists
+    video: "/videos/business.mp4" // ensure file exists or remove
   }
 ];
 
@@ -53,7 +53,6 @@ app.post("/book", (req, res) => {
   try {
     const { name, email, event, ticket } = req.body;
 
-    // Basic validation
     if (!name || !email || !event || !ticket) {
       return res.status(400).json({
         success: false,
@@ -70,7 +69,10 @@ app.post("/book", (req, res) => {
 
   } catch (err) {
     console.error("Booking error:", err);
-    res.status(500).json({ error: "Booking failed" });
+    res.status(500).json({
+      success: false,
+      message: "Booking failed"
+    });
   }
 });
 
@@ -117,10 +119,17 @@ app.get("/health", (req, res) => {
 });
 
 /* =========================
-   DEFAULT ROUTE
+   ROOT ROUTE
 ========================= */
 app.get("/", (req, res) => {
   res.send("🚀 Globia backend is running");
+});
+
+/* =========================
+   404 HANDLER (IMPORTANT)
+========================= */
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
 });
 
 /* =========================
@@ -128,6 +137,7 @@ app.get("/", (req, res) => {
 ========================= */
 const PORT = process.env.PORT || 10000;
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
