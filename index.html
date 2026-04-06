@@ -6,189 +6,136 @@
 <title>Global Platform</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-}
+body { margin:0; font-family:Arial; }
 
-/* NAVIGATION */
+/* NAV */
 nav {
-  background: #0a1f44;
-  padding: 15px;
-  text-align: center;
+  background:#0a1f44;
+  padding:15px;
+  text-align:center;
 }
 nav a {
-  color: white;
-  margin: 0 15px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 18px;
+  color:white;
+  margin:0 15px;
+  text-decoration:none;
+  font-weight:bold;
 }
 
 /* HERO */
 .hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  text-align:center;
 
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-              url('images/joe.jpg') center/cover no-repeat;
+  background:linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+             url('images/joe.jpg') center/cover;
 }
 
-.hero h1 {
-  font-size: 3em;
-  margin-bottom: 20px;
-}
-
-.hero p {
-  font-size: 1.2em;
-  margin-bottom: 30px;
-}
-
-/* BUTTONS */
 .btn {
-  padding: 15px 30px;
-  margin: 10px;
-  background: #ff6600;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  transition: 0.3s;
-  border: none;
-  cursor: pointer;
-}
-.btn:hover {
-  background: #e65c00;
+  padding:15px 30px;
+  margin:10px;
+  background:#ff6600;
+  color:white;
+  border:none;
+  cursor:pointer;
 }
 
-/* SECTION */
-.section {
-  padding: 40px;
-  text-align: center;
-}
-
-/* AI CHAT POPUP */
+/* CHAT */
 .chatbox {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 280px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  overflow: hidden;
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  width:280px;
+  background:white;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
 
 .chat-header {
-  background: #0a1f44;
-  color: white;
-  padding: 10px;
-  font-weight: bold;
+  background:#0a1f44;
+  color:white;
+  padding:10px;
 }
 
 .chat-body {
-  height: 180px;
-  overflow: auto;
-  padding: 10px;
-  font-size: 14px;
+  height:180px;
+  overflow:auto;
+  padding:10px;
 }
 
 .chat-input {
-  display: flex;
+  display:flex;
 }
 
 .chat-input input {
-  flex: 1;
-  padding: 10px;
-  border: none;
+  flex:1;
+  padding:10px;
+  border:none;
 }
 
 .chat-input button {
-  background: #ff6600;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-}
-
-/* FOOTER */
-footer {
-  background: #0a1f44;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  font-size: 14px;
+  background:#ff6600;
+  color:white;
+  border:none;
+  padding:10px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="index.html">Home</a>
-  <a href="conference.html">Conferences</a>
-  <a href="tourism.html">Tourism</a>
+<a href="index.html">Home</a>
+<a href="conference.html">Conferences</a>
+<a href="tourism.html">Tourism</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
-  <h1>Global Services Platform</h1>
-  <p>Connecting Tourism & International Conferences</p>
+<h1>Global Services Platform</h1>
+<p>Connecting Tourism & Conferences</p>
 
-  <a href="conference.html" class="btn">Explore Conferences</a>
-  <a href="tourism.html" class="btn">Explore Tourism</a>
+<a href="conference.html"><button class="btn">Explore Conferences</button></a>
+<a href="tourism.html"><button class="btn">Explore Tourism</button></a>
 </section>
 
-<!-- ABOUT -->
-<section class="section">
-  <h2>About Our Platform</h2>
-  <p>
-    We provide a global system for booking conferences, exploring tourism,
-    and connecting users with international opportunities.
-  </p>
-</section>
-
-<!-- AI CHAT -->
+<!-- CHAT -->
 <div class="chatbox">
-  <div class="chat-header">AI Assistant</div>
+<div class="chat-header">AI Assistant</div>
+<div class="chat-body" id="chat"></div>
 
-  <div class="chat-body" id="chat"></div>
-
-  <div class="chat-input">
-    <input id="input" placeholder="Ask something...">
-    <button onclick="chatAI()">Send</button>
-  </div>
+<div class="chat-input">
+<input id="input" placeholder="Ask something...">
+<button onclick="chatAI()">Send</button>
+</div>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  © 2026 Global Platform. All rights reserved.
-</footer>
-
-<!-- AI SCRIPT -->
-<script src="js/ai.js"></script>
-
 <script>
+const BASE_URL = "https://globia-production.up.railway.app";
+
 async function chatAI(){
-  let msg = document.getElementById("input").value;
-  let chat = document.getElementById("chat");
+ let msg = document.getElementById("input").value;
+ let chat = document.getElementById("chat");
 
-  if(!msg) return;
+ if(!msg) return;
 
-  chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
+ chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
 
-  const reply = await askAI(msg);
+ const res = await fetch(`${BASE_URL}/ai`, {
+   method:"POST",
+   headers:{"Content-Type":"application/json"},
+   body:JSON.stringify({message:msg})
+ });
 
-  chat.innerHTML += `<p><b>AI:</b> ${reply}</p>`;
+ const data = await res.json();
 
-  document.getElementById("input").value = "";
-  chat.scrollTop = chat.scrollHeight;
+ chat.innerHTML += `<p><b>AI:</b> ${data.reply}</p>`;
+
+ document.getElementById("input").value="";
+ chat.scrollTop = chat.scrollHeight;
 }
 </script>
 
