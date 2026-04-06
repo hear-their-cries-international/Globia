@@ -43,46 +43,6 @@ nav a {
   border:none;
   cursor:pointer;
 }
-
-/* CHAT */
-.chatbox {
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:280px;
-  background:white;
-  border-radius:10px;
-  box-shadow:0 0 10px rgba(0,0,0,0.2);
-}
-
-.chat-header {
-  background:#0a1f44;
-  color:white;
-  padding:10px;
-}
-
-.chat-body {
-  height:180px;
-  overflow:auto;
-  padding:10px;
-}
-
-.chat-input {
-  display:flex;
-}
-
-.chat-input input {
-  flex:1;
-  padding:10px;
-  border:none;
-}
-
-.chat-input button {
-  background:#ff6600;
-  color:white;
-  border:none;
-  padding:10px;
-}
 </style>
 </head>
 
@@ -101,43 +61,6 @@ nav a {
 <a href="conference.html"><button class="btn">Explore Conferences</button></a>
 <a href="tourism.html"><button class="btn">Explore Tourism</button></a>
 </section>
-
-<!-- CHAT -->
-<div class="chatbox">
-<div class="chat-header">AI Assistant</div>
-<div class="chat-body" id="chat"></div>
-
-<div class="chat-input">
-<input id="input" placeholder="Ask something...">
-<button onclick="chatAI()">Send</button>
-</div>
-</div>
-
-<script>
-const BASE_URL = "https://globia-production.up.railway.app";
-
-async function chatAI(){
- let msg = document.getElementById("input").value;
- let chat = document.getElementById("chat");
-
- if(!msg) return;
-
- chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
-
- const res = await fetch(`${BASE_URL}/ai`, {
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message:msg})
- });
-
- const data = await res.json();
-
- chat.innerHTML += `<p><b>AI:</b> ${data.reply}</p>`;
-
- document.getElementById("input").value="";
- chat.scrollTop = chat.scrollHeight;
-}
-</script>
 
 </body>
 </html>
