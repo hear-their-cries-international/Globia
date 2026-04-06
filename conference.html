@@ -42,17 +42,12 @@ video {
   border-radius:8px;
 }
 
-input, select {
-  width:100%;
-  padding:10px;
-  margin:10px 0;
-}
-
 .btn {
   background:#ff6600;
   color:white;
   padding:10px;
   border:none;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -62,6 +57,7 @@ input, select {
 <nav>
 <a href="index.html">Home</a>
 <a href="conference.html">Conferences</a>
+<a href="tourism.html">Tourism</a>
 </nav>
 
 <section class="hero">
@@ -74,38 +70,28 @@ input, select {
 </section>
 
 <section class="section">
-<h2>Book Your Seat</h2>
+<h2>Book & Pay</h2>
 
-<form id="bookingForm">
 <input id="nameInput" placeholder="Full Name" required>
 <input id="emailInput" placeholder="Email" required>
 
 <select id="eventSelect"></select>
 
 <select id="ticketSelect">
-<option>Regular</option>
-<option>VIP</option>
-<option>VVIP</option>
+<option value="1000">Regular - KES 1000</option>
+<option value="2000">VIP - KES 2000</option>
+<option value="3000">VVIP - KES 3000</option>
 </select>
 
-<button class="btn">Book Now</button>
-</form>
+<button class="btn" onclick="payNow()">Pay & Book</button>
 
 <p id="confirmation"></p>
 </section>
 
-<section class="section">
-<h2>AI Assistant</h2>
-
-<input id="aiInput" placeholder="Ask something...">
-<button onclick="ask()">Ask AI</button>
-
-<p id="aiOutput"></p>
-</section>
+<script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
 const BASE_URL = "https://globia-production.up.railway.app";
-
 let eventsData = [];
 
 /* LOAD EVENTS */
@@ -122,13 +108,11 @@ async function loadEvents(){
   select.innerHTML = "";
 
   events.forEach((e,i)=>{
-
     container.innerHTML += `
       <div class="card">
         <h3>${e.name}</h3>
         <p>${e.location} | ${e.date}</p>
         <p>${e.description}</p>
-
         <video controls>
           <source src="${BASE_URL}${e.video}" type="video/mp4">
         </video>
@@ -141,43 +125,24 @@ async function loadEvents(){
 
 loadEvents();
 
-/* BOOKING */
-document.getElementById("bookingForm").addEventListener("submit", async (e)=>{
- e.preventDefault();
+/* PAYMENT */
+function payNow(){
+  const email = document.getElementById("emailInput").value;
+  const amount = document.getElementById("ticketSelect").value;
 
- const name = document.getElementById("nameInput").value;
- const email = document.getElementById("emailInput").value;
- const event = eventsData[document.getElementById("eventSelect").value];
- const ticket = document.getElementById("ticketSelect").value;
+  let handler = PaystackPop.setup({
+    key: "YOUR_PUBLIC_KEY_HERE",
+    email: email,
+    amount: amount * 100,
+    currency: "KES",
+    callback: function(response){
+      document.getElementById("confirmation").innerText = "✅ Payment successful!";
+    }
+  });
 
- await fetch(`${BASE_URL}/book`, {
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({name,email,event:event.name,ticket})
- });
-
- document.getElementById("confirmation").innerText = "✅ Booking successful!";
- e.target.reset();
-});
-
-/* AI */
-async function ask(){
- const input = document.getElementById("aiInput").value;
-
- const res = await fetch(`${BASE_URL}/ai`, {
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message:input})
- });
-
- const data = await res.json();
- document.getElementById("aiOutput").innerText = data.reply;
+  handler.openIframe();
 }
 </script>
 
 </body>
 </html>
-
-
-
-
