@@ -31,36 +31,34 @@ nav a { color:white; margin:0 15px; text-decoration:none; }
 
 .card {
   background:white;
-  padding:20px;
+  padding:15px;
   border-radius:10px;
   box-shadow:0 0 8px rgba(0,0,0,0.1);
   text-align:left;
-}
-
-.card h3 {
-  margin-top:0;
-}
-
-.desc {
-  font-size:14px;
-  color:#555;
-  margin:10px 0;
-}
-
-.benefits {
-  margin:10px 0 15px 0;
-  padding-left:18px;
-}
-
-.benefits li {
-  font-size:14px;
-  margin-bottom:6px;
 }
 
 video {
   width:100%;
   margin-top:10px;
   border-radius:8px;
+}
+
+/* DESCRIPTION */
+.desc {
+  font-size:14px;
+  color:#555;
+  margin:10px 0;
+}
+
+/* BENEFITS */
+.benefits {
+  margin:10px 0;
+  padding-left:18px;
+}
+
+.benefits li {
+  font-size:14px;
+  margin-bottom:5px;
 }
 
 .btn {
@@ -89,49 +87,51 @@ video {
 <section class="section">
 <h2>Available Conferences</h2>
 
-<div class="grid" id="conferenceContainer">
+<div class="grid">
 
-<!-- INVESTOR CONFERENCE -->
+<!-- CONFERENCE 1 -->
 <div class="card">
-<h3>Global Investment & Partnership Summit</h3>
+<h3>Global Investment & Innovation Summit</h3>
+<p>Nairobi | 2026</p>
 
 <p class="desc">
-A high-level networking conference designed to connect investors, innovators, entrepreneurs, and producers. This platform enables meaningful partnerships in technology, agriculture, manufacturing, and finance to accelerate global business growth.
+A high-impact conference designed to connect investors with producers, startups, and innovators seeking technological or financial partnerships. This platform enables collaboration, funding opportunities, and global market expansion.
 </p>
 
-<ul class="benefits">
-<li>✔ Direct access to global investors and venture capitalists</li>
-<li>✔ Opportunity to pitch business ideas and secure funding</li>
-<li>✔ Networking with industry leaders and innovators</li>
-<li>✔ Access to mentorship and partnership opportunities</li>
-<li>✔ Exposure to international markets and collaborations</li>
-</ul>
-
 <video controls>
-<source src="videos/investment.mp4" type="video/mp4">
+<source src="/videos/investment.mp4" type="video/mp4">
 </video>
+
+<ul class="benefits">
+<li>✔ Direct networking with global investors</li>
+<li>✔ Access to funding and venture capital opportunities</li>
+<li>✔ Partnership development with tech innovators</li>
+<li>✔ Business growth and expansion strategies</li>
+<li>✔ Exposure to international markets</li>
+</ul>
 
 </div>
 
-<!-- YOUTH LEADERSHIP CONFERENCE -->
+<!-- CONFERENCE 2 -->
 <div class="card">
-<h3>Youth Leadership & Governance Conference</h3>
+<h3>Youth Leadership & Political Empowerment Forum</h3>
+<p>Global | 2026</p>
 
 <p class="desc">
-A transformative gathering aimed at empowering young people to take active roles in governance and leadership. The conference focuses on building a strong youth movement, fostering political awareness, and forming a united youth-driven platform for national development.
+A transformative gathering aimed at empowering young people to take leadership roles in government and society. The conference supports the formation of a strong, united youth movement focused on governance, policy influence, and national development.
 </p>
 
-<ul class="benefits">
-<li>✔ Leadership training and political education</li>
-<li>✔ Platform to build a strong youth network</li>
-<li>✔ Mentorship from experienced leaders and policymakers</li>
-<li>✔ Opportunity to participate in youth-driven initiatives</li>
-<li>✔ Skills development in governance, communication, and strategy</li>
-</ul>
-
 <video controls>
-<source src="videos/youth.mp4" type="video/mp4">
+<source src="/videos/youth.mp4" type="video/mp4">
 </video>
+
+<ul class="benefits">
+<li>✔ Leadership training and mentorship programs</li>
+<li>✔ Guidance on forming and managing a youth political movement</li>
+<li>✔ Networking with policymakers and global leaders</li>
+<li>✔ Public speaking and governance skills development</li>
+<li>✔ Opportunities to influence national policies</li>
+</ul>
 
 </div>
 
@@ -145,8 +145,8 @@ A transformative gathering aimed at empowering young people to take active roles
 <input id="emailInput" placeholder="Email" required>
 
 <select id="eventSelect">
-<option value="0">Global Investment & Partnership Summit</option>
-<option value="1">Youth Leadership & Governance Conference</option>
+<option value="Investment Summit">Global Investment & Innovation Summit</option>
+<option value="Youth Leadership Forum">Youth Leadership & Political Empowerment Forum</option>
 </select>
 
 <select id="ticketSelect">
