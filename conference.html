@@ -31,9 +31,30 @@ nav a { color:white; margin:0 15px; text-decoration:none; }
 
 .card {
   background:white;
-  padding:15px;
+  padding:20px;
   border-radius:10px;
   box-shadow:0 0 8px rgba(0,0,0,0.1);
+  text-align:left;
+}
+
+.card h3 {
+  margin-top:0;
+}
+
+.desc {
+  font-size:14px;
+  color:#555;
+  margin:10px 0;
+}
+
+.benefits {
+  margin:10px 0 15px 0;
+  padding-left:18px;
+}
+
+.benefits li {
+  font-size:14px;
+  margin-bottom:6px;
 }
 
 video {
@@ -48,6 +69,7 @@ video {
   padding:10px;
   border:none;
   cursor:pointer;
+  margin-top:10px;
 }
 </style>
 </head>
@@ -66,7 +88,54 @@ video {
 
 <section class="section">
 <h2>Available Conferences</h2>
-<div class="grid" id="conferenceContainer"></div>
+
+<div class="grid" id="conferenceContainer">
+
+<!-- INVESTOR CONFERENCE -->
+<div class="card">
+<h3>Global Investment & Partnership Summit</h3>
+
+<p class="desc">
+A high-level networking conference designed to connect investors, innovators, entrepreneurs, and producers. This platform enables meaningful partnerships in technology, agriculture, manufacturing, and finance to accelerate global business growth.
+</p>
+
+<ul class="benefits">
+<li>✔ Direct access to global investors and venture capitalists</li>
+<li>✔ Opportunity to pitch business ideas and secure funding</li>
+<li>✔ Networking with industry leaders and innovators</li>
+<li>✔ Access to mentorship and partnership opportunities</li>
+<li>✔ Exposure to international markets and collaborations</li>
+</ul>
+
+<video controls>
+<source src="videos/investment.mp4" type="video/mp4">
+</video>
+
+</div>
+
+<!-- YOUTH LEADERSHIP CONFERENCE -->
+<div class="card">
+<h3>Youth Leadership & Governance Conference</h3>
+
+<p class="desc">
+A transformative gathering aimed at empowering young people to take active roles in governance and leadership. The conference focuses on building a strong youth movement, fostering political awareness, and forming a united youth-driven platform for national development.
+</p>
+
+<ul class="benefits">
+<li>✔ Leadership training and political education</li>
+<li>✔ Platform to build a strong youth network</li>
+<li>✔ Mentorship from experienced leaders and policymakers</li>
+<li>✔ Opportunity to participate in youth-driven initiatives</li>
+<li>✔ Skills development in governance, communication, and strategy</li>
+</ul>
+
+<video controls>
+<source src="videos/youth.mp4" type="video/mp4">
+</video>
+
+</div>
+
+</div>
 </section>
 
 <section class="section">
@@ -75,7 +144,10 @@ video {
 <input id="nameInput" placeholder="Full Name" required>
 <input id="emailInput" placeholder="Email" required>
 
-<select id="eventSelect"></select>
+<select id="eventSelect">
+<option value="0">Global Investment & Partnership Summit</option>
+<option value="1">Youth Leadership & Governance Conference</option>
+</select>
 
 <select id="ticketSelect">
 <option value="1000">Regular - KES 1000</option>
@@ -91,41 +163,6 @@ video {
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
-const BASE_URL = "https://globia-production.up.railway.app";
-let eventsData = [];
-
-/* LOAD EVENTS */
-async function loadEvents(){
-  const res = await fetch(`${BASE_URL}/events`);
-  const events = await res.json();
-
-  eventsData = events;
-
-  let container = document.getElementById("conferenceContainer");
-  let select = document.getElementById("eventSelect");
-
-  container.innerHTML = "";
-  select.innerHTML = "";
-
-  events.forEach((e,i)=>{
-    container.innerHTML += `
-      <div class="card">
-        <h3>${e.name}</h3>
-        <p>${e.location} | ${e.date}</p>
-        <p>${e.description}</p>
-        <video controls>
-          <source src="${BASE_URL}${e.video}" type="video/mp4">
-        </video>
-      </div>
-    `;
-
-    select.innerHTML += `<option value="${i}">${e.name}</option>`;
-  });
-}
-
-loadEvents();
-
-/* PAYMENT */
 function payNow(){
   const email = document.getElementById("emailInput").value;
   const amount = document.getElementById("ticketSelect").value;
