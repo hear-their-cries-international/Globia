@@ -11,11 +11,22 @@ body { margin:0; font-family:Arial; background:#f4f4f4; }
 nav {
   background:#0a1f44;
   padding:15px;
-  text-align:center;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
+
+.nav-left {
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo { height:40px; }
+
 nav a {
   color:white;
-  margin:0 15px;
+  margin:0 10px;
   text-decoration:none;
 }
 
@@ -27,7 +38,6 @@ nav a {
   align-items:center;
   flex-direction:column;
   color:white;
-  text-align:center;
 }
 
 .section { padding:40px 20px; text-align:center; }
@@ -38,37 +48,14 @@ nav a {
   gap:25px;
 }
 
-/* CARD */
 .card {
   background:white;
   padding:20px;
   border-radius:10px;
-  box-shadow:0 0 10px rgba(0,0,0,0.1);
-  text-align:left;
 }
 
-.card h3 { margin-top:0; }
+video { width:100%; border-radius:8px; }
 
-.card p { font-size:14px; color:#555; }
-
-/* BENEFITS */
-.benefits {
-  margin:10px 0;
-  padding-left:18px;
-}
-.benefits li {
-  font-size:14px;
-  margin-bottom:5px;
-}
-
-/* VIDEO */
-video {
-  width:100%;
-  margin-top:10px;
-  border-radius:8px;
-}
-
-/* BUTTON */
 .btn {
   background:#ff6600;
   color:white;
@@ -76,7 +63,6 @@ video {
   border:none;
   cursor:pointer;
   border-radius:5px;
-  margin-top:10px;
 }
 </style>
 </head>
@@ -84,9 +70,14 @@ video {
 <body>
 
 <nav>
+<div class="nav-left">
+  <img src="logo.png" class="logo">
+</div>
+<div>
 <a href="index.html">Home</a>
 <a href="conference.html">Conferences</a>
 <a href="tourism.html">Tourism</a>
+</div>
 </nav>
 
 <section class="hero">
@@ -99,71 +90,34 @@ video {
 
 <div class="grid">
 
-<!-- PACKAGE 1 -->
 <div class="card">
-<h3>💼 Investor–Producer Partnership Conference</h3>
-
+<h3>Investor–Producer Conference</h3>
 <video controls>
-<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+<source src="https://www.w3schools.com/html/mov_bbb.mp4">
 </video>
 
-<p>
-This conference is designed to connect investors with producers, innovators, and entrepreneurs.
-It focuses on building strong partnerships in technology, finance, and business growth.
-Participants get the opportunity to pitch ideas, meet investors, and secure funding.
-</p>
-
-<ul class="benefits">
-<li>✔ Direct access to investors and funding opportunities</li>
-<li>✔ Networking with entrepreneurs and business leaders</li>
-<li>✔ Pitching sessions for projects and ideas</li>
-<li>✔ Partnership and collaboration opportunities</li>
-<li>✔ Business growth and scaling insights</li>
-</ul>
-
-<h4>Select Ticket</h4>
 <select id="ticket1">
-  <option value="1000">Regular - KES 1000</option>
-  <option value="2000">VIP - KES 2000</option>
-  <option value="3000">VVIP - KES 3000</option>
+<option value="1000">Regular - KES 1000</option>
+<option value="2000">VIP - KES 2000</option>
 </select>
 
-<input id="email1" placeholder="Enter Email" style="display:block; margin-top:10px; padding:8px; width:100%;">
-
-<button class="btn" onclick="payNow(1)">Pay & Book</button>
+<input id="email1" placeholder="Email">
+<button class="btn" onclick="payNow(1)">Pay</button>
 </div>
 
-<!-- PACKAGE 2 -->
 <div class="card">
-<h3>🧑‍🤝‍🧑 Youth Leadership & Political Empowerment Conference</h3>
-
+<h3>Youth Leadership Conference</h3>
 <video controls>
-<source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+<source src="https://www.w3schools.com/html/movie.mp4">
 </video>
 
-<p>
-This conference empowers young people to take up leadership roles and influence governance.
-It promotes the formation of a strong youth-driven movement aimed at political participation and leadership development.
-</p>
-
-<ul class="benefits">
-<li>✔ Leadership training and mentorship</li>
-<li>✔ Political awareness and civic education</li>
-<li>✔ Networking with leaders and policymakers</li>
-<li>✔ Youth empowerment and skill development</li>
-<li>✔ Opportunities to join or build youth movements</li>
-</ul>
-
-<h4>Select Ticket</h4>
 <select id="ticket2">
-  <option value="1000">Regular - KES 1000</option>
-  <option value="2000">VIP - KES 2000</option>
-  <option value="3000">VVIP - KES 3000</option>
+<option value="1000">Regular</option>
+<option value="2000">VIP</option>
 </select>
 
-<input id="email2" placeholder="Enter Email" style="display:block; margin-top:10px; padding:8px; width:100%;">
-
-<button class="btn" onclick="payNow(2)">Pay & Book</button>
+<input id="email2" placeholder="Email">
+<button class="btn" onclick="payNow(2)">Pay</button>
 </div>
 
 </div>
@@ -172,30 +126,19 @@ It promotes the formation of a strong youth-driven movement aimed at political p
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
-const BASE_URL = "https://globia-production.up.railway.app";
-
-/* PAYMENT FUNCTION */
 function payNow(type){
+let email = document.getElementById(type===1?"email1":"email2").value;
+let amount = document.getElementById(type===1?"ticket1":"ticket2").value;
 
-  let email = document.getElementById(type === 1 ? "email1" : "email2").value;
-  let amount = document.getElementById(type === 1 ? "ticket1" : "ticket2").value;
+let handler = PaystackPop.setup({
+key:"pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
+email:email,
+amount:amount*100,
+currency:"KES",
+callback:function(){ alert("Payment successful"); }
+});
 
-  if(!email){
-    alert("Please enter your email");
-    return;
-  }
-
-  let handler = PaystackPop.setup({
-    key: "pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
-    email: email,
-    amount: amount * 100,
-    currency: "KES",
-    callback: function(response){
-      alert("✅ Payment successful!");
-    }
-  });
-
-  handler.openIframe();
+handler.openIframe();
 }
 </script>
 
