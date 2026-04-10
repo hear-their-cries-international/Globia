@@ -32,7 +32,10 @@ nav {
   font-weight: bold;
   font-size: 18px;
 }
-
+nav img {
+  height: 45px;   /* change logo size here freely */
+  width: auto;
+}
 .nav-links a {
   color: white;
   margin: 0 12px;
