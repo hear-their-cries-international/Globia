@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Global Platform</title>
 
-<!-- GOOGLE AUTH PROVIDER SUPPORT -->
+<!-- GOOGLE AUTH -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 <!-- FIREBASE -->
@@ -42,48 +42,67 @@
     document.getElementById("authModal").style.display = "flex";
   };
 
-  // CLOSE MODAL
+  // CLOSE MODAL + CLEAR INPUTS (IMPORTANT FIX)
   window.closeAuth = () => {
     document.getElementById("authModal").style.display = "none";
+
+    // CLEAR FIELDS EVERY TIME
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
   };
 
   // SIGN UP
   window.signup = () => {
-    const email = emailInput.value;
-    const password = passwordInput.value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     createUserWithEmailAndPassword(auth, email, password)
-      .then(() => closeAuth())
-      .catch(e => statusBar.innerText = e.message);
+      .then(() => {
+        closeAuth();
+      })
+      .catch(e => {
+        alert(e.message);
+      });
   };
 
   // LOGIN
   window.login = () => {
-    const email = emailInput.value;
-    const password = passwordInput.value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => closeAuth())
-      .catch(e => statusBar.innerText = e.message);
+      .then(() => {
+        closeAuth();
+      })
+      .catch(e => {
+        alert(e.message);
+      });
   };
 
   // GOOGLE LOGIN
   window.googleLogin = () => {
     signInWithPopup(auth, provider)
       .then(() => closeAuth())
-      .catch(e => statusBar.innerText = e.message);
+      .catch(e => alert(e.message));
   };
 
-  // LOGOUT (CLEAR EVERYTHING)
+  // LOGOUT (FULL CLEAN RESET)
   window.logout = () => {
     signOut(auth).then(() => {
-      statusBar.innerText = "";
+
+      // FORCE CLEAN UI
       document.getElementById("authTab").style.display = "flex";
       document.getElementById("userBar").style.display = "none";
+      document.getElementById("userText").innerText = "";
+
+      // CLEAR INPUTS (PREVENT MEMORY LEAK LOOK)
+      document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
+
     });
   };
 
-  // AUTH STATE
+  // AUTH STATE LISTENER
   onAuthStateChanged(auth, (user) => {
     const authTab = document.getElementById("authTab");
     const userBar = document.getElementById("userBar");
@@ -100,9 +119,6 @@
     }
   });
 
-  const emailInput = document.getElementById("email");
-  const passwordInput = document.getElementById("password");
-  const statusBar = document.getElementById("statusBar");
 </script>
 
 <style>
@@ -208,6 +224,11 @@ body {
 .google-btn {
   background:#db4437;
   margin-top:10px;
+  color:white;
+  border:none;
+  padding:10px;
+  border-radius:6px;
+  cursor:pointer;
 }
 </style>
 
