@@ -24,8 +24,14 @@ nav {
   align-items:center;
 }
 
+.nav-left {
+  display:flex;
+  align-items:center;
+}
+
 .logo {
   height:60px;
+  width:auto;
 }
 
 nav a {
@@ -33,6 +39,11 @@ nav a {
   margin:0 12px;
   text-decoration:none;
   font-weight:600;
+  transition:0.3s;
+}
+
+nav a:hover {
+  color:#ff6600;
 }
 
 /* HERO */
@@ -43,13 +54,14 @@ nav a {
   align-items:center;
   color:white;
   text-align:center;
-  background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+  background:linear-gradient(rgba(0,0,0,0.0), rgba(0,0,0,0.0)),
              url("/images/hero.jpg") center/cover no-repeat;
 }
 
 .hero h1 {
-  font-size:48px;
+  font-size:46px;
   letter-spacing:1px;
+  animation:fadeIn 1.2s ease;
 }
 
 /* SECTION */
@@ -59,7 +71,7 @@ nav a {
 }
 
 .section h2{
-  font-size:34px;
+  font-size:32px;
   margin-bottom:30px;
   color:#0a1f44;
 }
@@ -74,59 +86,53 @@ nav a {
 /* CARD */
 .card {
   background:white;
-  border-radius:20px;
+  border-radius:18px;
   overflow:hidden;
-  box-shadow:0 12px 30px rgba(0,0,0,0.15);
-  transition:0.4s;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+  text-align:left;
+  transition:all 0.4s ease;
+  cursor:pointer;
   position:relative;
 }
 
-.card:hover {
+/* HOVER + MOBILE TAP EFFECT */
+.card:hover,
+.card:active {
   transform:translateY(-10px) scale(1.02);
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
 }
 
 /* IMAGE ZOOM */
 .card img {
   width:100%;
-  height:220px;
+  height:200px;
   object-fit:cover;
-  transition:0.4s;
+  transition:transform 0.5s ease;
 }
 
-.card:hover img {
+.card:hover img,
+.card:active img {
   transform:scale(1.1);
-}
-
-/* BADGES */
-.badge {
-  position:absolute;
-  top:15px;
-  left:15px;
-  background:#ff6600;
-  color:white;
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:12px;
-  font-weight:bold;
 }
 
 /* CARD CONTENT */
 .card-content { 
   padding:25px; 
   background:linear-gradient(to bottom, #ffffff, #f9fbff);
+  transition:0.3s;
 }
 
 .card h3 { 
-  margin:0;
+  margin-top:0; 
   font-size:22px;
   color:#0a1f44;
+  transition:0.3s;
 }
 
-/* RATING */
-.rating {
-  color:#f5a623;
-  margin:5px 0 10px;
-  font-size:14px;
+/* TITLE HOVER EFFECT */
+.card:hover h3,
+.card:active h3 {
+  color:#ff6600;
 }
 
 /* DESCRIPTION */
@@ -134,55 +140,69 @@ nav a {
   font-size:15px;
   color:#444;
   line-height:1.6;
-  margin-bottom:15px;
+  margin-bottom:18px;
 }
 
 /* BENEFITS */
 .benefits {
+  margin:15px 0 20px 0;
+  padding-left:0;
   list-style:none;
-  padding:0;
-  margin:15px 0;
 }
 
 .benefits li {
-  padding-left:22px;
-  position:relative;
-  margin-bottom:8px;
   font-size:14px;
+  margin-bottom:8px;
+  color:#333;
+  padding-left:24px;
+  position:relative;
+  transition:0.3s;
 }
 
+/* ICON */
 .benefits li::before {
   content:"✔";
   position:absolute;
   left:0;
   color:#ff6600;
+  font-weight:bold;
+}
+
+/* BENEFIT HOVER */
+.card:hover .benefits li,
+.card:active .benefits li {
+  transform:translateX(5px);
 }
 
 /* BUTTON */
 .btn {
   display:inline-block;
-  padding:12px 24px;
+  padding:12px 22px;
   background:linear-gradient(135deg,#ff7a18,#ff6600);
   color:white;
   border:none;
+  cursor:pointer;
   border-radius:30px;
   font-weight:bold;
-  cursor:pointer;
-  transition:0.3s;
-  box-shadow:0 6px 15px rgba(255,102,0,0.3);
+  transition:all 0.3s ease;
+  box-shadow:0 5px 15px rgba(255,102,0,0.3);
 }
 
+/* BUTTON HOVER */
 .btn:hover {
   transform:scale(1.08);
-  background:linear-gradient(135deg,#ff6600,#e65c00);
+  box-shadow:0 8px 20px rgba(255,102,0,0.5);
 }
 
-/* PRICE STYLE */
-.price {
-  font-size:18px;
-  font-weight:bold;
-  color:#0a1f44;
-  margin-bottom:10px;
+/* BUTTON TAP (MOBILE) */
+.btn:active {
+  transform:scale(0.95);
+}
+
+/* FADE IN */
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -190,7 +210,9 @@ nav a {
 <body>
 
 <nav>
-  <img src="images/logo.png" class="logo">
+  <div class="nav-left">
+    <img src="images/logo.png" class="logo" alt="Logo">
+  </div>
 
   <div>
     <a href="index.html">Home</a>
@@ -204,65 +226,49 @@ nav a {
 </div>
 
 <section class="section">
-<h2>Top Destinations</h2>
+<h2>Destinations</h2>
 
 <div class="grid">
 
-<!-- MAASAI MARA -->
 <div class="card">
-<div class="badge">🔥 Popular</div>
-
 <img src="/images/maasai.jpg">
-
 <div class="card-content">
 <h3>Maasai Mara</h3>
 
-<div class="rating">⭐⭐⭐⭐☆ (4.7)</div>
-
 <p class="desc">
-Experience one of Africa’s most iconic wildlife reserves with breathtaking safaris and rich Maasai culture.
+Experience one of Africa’s most iconic wildlife reserves, home to the Great Migration and the Big Five.
 </p>
 
 <ul class="benefits">
 <li>Guided game drives</li>
-<li>Luxury & budget stays</li>
-<li>Cultural experiences</li>
+<li>Luxury accommodation</li>
+<li>Maasai cultural visits</li>
 <li>Meals included</li>
 <li>Transport provided</li>
 </ul>
 
-<div class="price">KES 5000</div>
-
-<button class="btn" onclick="payTour(5000)">Book Now</button>
+<button class="btn" onclick="payTour(5000)">Book - KES 5000</button>
 </div>
 </div>
 
-<!-- DUBAI -->
 <div class="card">
-<div class="badge">⭐ Limited Offer</div>
-
 <img src="/images/dubai.jpg">
-
 <div class="card-content">
 <h3>Dubai</h3>
 
-<div class="rating">⭐⭐⭐⭐⭐ (4.9)</div>
-
 <p class="desc">
-Luxury, shopping, and adventure in one of the world’s most modern cities.
+Luxury, innovation, and desert adventure combined into one unforgettable experience.
 </p>
 
 <ul class="benefits">
-<li>5-star hotels</li>
+<li>5-star hotel</li>
 <li>Desert safari</li>
-<li>City tours</li>
+<li>City tour</li>
 <li>Shopping experience</li>
 <li>Airport transfers</li>
 </ul>
 
-<div class="price">KES 10000</div>
-
-<button class="btn" onclick="payTour(10000)">Book Now</button>
+<button class="btn" onclick="payTour(10000)">Book - KES 10000</button>
 </div>
 </div>
 
