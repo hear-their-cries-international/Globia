@@ -24,6 +24,8 @@ nav {
   align-items:center;
 }
 
+.nav-left { display:flex; align-items:center; }
+
 .logo { height:60px; }
 
 nav a {
@@ -31,11 +33,14 @@ nav a {
   margin:0 12px;
   text-decoration:none;
   font-weight:600;
+  transition:0.3s;
 }
+
+nav a:hover { color:#ff6600; }
 
 /* HERO */
 .hero {
-  height:55vh;
+  height:60vh;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -43,12 +48,28 @@ nav a {
   text-align:center;
   background:linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
              url("/images/hero.jpg") center/cover no-repeat;
+  transition:0.5s;
 }
 
-.hero h1 { font-size:46px; }
+.hero:hover {
+  filter:brightness(1.1);
+}
 
-/* SECTION */
-.section { padding:40px; text-align:center; }
+.hero h1 {
+  font-size:46px;
+}
+
+/* SECTION GLOW ON SCROLL */
+.section {
+  padding:50px 40px;
+  text-align:center;
+  transition:0.5s;
+}
+
+.section:hover {
+  box-shadow:0 0 40px rgba(255,102,0,0.15);
+  transform:scale(1.01);
+}
 
 /* GRID */
 .grid {
@@ -63,12 +84,13 @@ nav a {
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
-  position:relative;
   transition:0.4s;
+  position:relative;
 }
 
 .card:hover {
-  transform:translateY(-8px) scale(1.02);
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 25px 50px rgba(0,0,0,0.2);
 }
 
 /* IMAGE */
@@ -76,75 +98,85 @@ nav a {
   width:100%;
   height:200px;
   object-fit:cover;
+  transition:0.5s;
 }
 
-/* SLOT (SMALLER + CLEAN) */
-.slots {
+.card:hover img {
+  transform:scale(1.1);
+}
+
+/* CONTENT */
+.card-content { padding:25px; }
+
+.card h3 {
+  color:#0a1f44;
+}
+
+/* ⭐ STARS */
+.stars {
+  color:#ffaa00;
+  margin:6px 0;
+}
+
+/* 💬 REVIEWS */
+.review {
+  font-size:13px;
+  font-style:italic;
+  color:#666;
+  margin-bottom:10px;
+}
+
+/* 🔥 LIMITED SLOT BADGE */
+.badge {
   position:absolute;
   top:10px;
   left:10px;
   background:#ff3b3b;
   color:white;
-  padding:4px 8px;
-  font-size:11px;
-  border-radius:20px;
-}
-
-/* CONTENT */
-.card-content { padding:20px; }
-
-/* ⭐ STARS */
-.stars { color:#ffaa00; font-size:15px; margin:6px 0; }
-
-/* 💬 LEFT REVIEW */
-.review-left {
-  font-size:13px;
-  font-style:italic;
-  color:#666;
-  margin-bottom:8px;
-}
-
-/* 🧾 RIGHT LIVE FEED (SMALL SIDE BAR) */
-.live-feed {
-  position:fixed;
-  right:10px;
-  top:120px;
-  width:220px;
-  background:white;
-  padding:10px;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
+  padding:6px 12px;
   font-size:12px;
-  max-height:300px;
-  overflow:hidden;
+  border-radius:20px;
+  animation:pulse 1.8s infinite;
 }
 
-.live-feed h4 {
-  margin:0 0 8px 0;
-  font-size:13px;
-  color:#0a1f44;
-}
-
-.feed-item {
-  margin-bottom:6px;
-  color:#333;
-  animation:fadeIn 0.5s ease;
+@keyframes pulse {
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
 }
 
 /* BUTTON */
 .btn {
-  padding:10px 18px;
-  background:#ff6600;
+  padding:12px 22px;
+  background:linear-gradient(135deg,#ff7a18,#ff6600);
   color:white;
   border:none;
   border-radius:30px;
   cursor:pointer;
+  transition:0.3s;
+}
+
+.btn:hover {
+  transform:scale(1.08);
+}
+
+/* POPUP */
+.popup {
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  background:white;
+  padding:12px 18px;
+  border-radius:10px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  display:none;
+  z-index:999;
 }
 
 /* FADE */
 @keyframes fadeIn {
-  from {opacity:0;}
-  to {opacity:1;}
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;}
 }
 </style>
 </head>
@@ -152,7 +184,10 @@ nav a {
 <body>
 
 <nav>
-  <img src="images/logo.png" class="logo">
+  <div class="nav-left">
+    <img src="images/logo.png" class="logo">
+  </div>
+
   <div>
     <a href="index.html">Home</a>
     <a href="conference.html">Conferences</a>
@@ -169,66 +204,56 @@ nav a {
 
 <div class="grid">
 
-<!-- ================= MAASAI ================= -->
+<!-- ================= MAASAI MARA ================= -->
 <div class="card">
-<div class="slots" id="slots1">🔥 6 slots left</div>
+<div class="badge" id="slot1">🔥 Limited Offer: 6 left</div>
 <img src="/images/maasai.jpg">
 
 <div class="card-content">
-
 <h3>Maasai Mara</h3>
 
-<!-- ⭐ STAR RATING -->
 <div class="stars">★★★★★</div>
 
-<!-- 💬 LEFT REVIEWS (STATIC PER USER SYSTEM) -->
-<div class="review-left" id="reviewLeft1">
-"Perfect safari experience - Daniel (UK)"
+<div class="review" id="review-mara">
+"Safari of a lifetime - James (UK)"
 </div>
 
-<p>Experience Africa’s iconic wildlife reserve.</p>
+<p>Experience Africa’s greatest wildlife reserve.</p>
 
 <button class="btn" onclick="payTour(5000)">Book - KES 5000</button>
-
 </div>
 </div>
 
 <!-- ================= DUBAI ================= -->
 <div class="card">
-<div class="slots" id="slots2">🔥 8 slots left</div>
+<div class="badge" id="slot2">🔥 Limited Offer: 8 left</div>
 <img src="/images/dubai.jpg">
 
 <div class="card-content">
-
 <h3>Dubai</h3>
 
 <div class="stars">★★★★☆</div>
 
-<div class="review-left" id="reviewLeft2">
-"Luxury beyond expectations - Sarah (USA)"
+<div class="review" id="review-dubai">
+"Luxury beyond imagination - Sarah (USA)"
 </div>
 
-<p>Luxury, shopping & desert adventure.</p>
+<p>Luxury, shopping and desert adventure.</p>
 
 <button class="btn" onclick="payTour(10000)">Book - KES 10000</button>
-
 </div>
 </div>
 
 </div>
 </section>
 
-<!-- 🧾 RIGHT SIDE LIVE FEED -->
-<div class="live-feed">
-<h4>🔥 Live Bookings</h4>
-<div id="feed"></div>
-</div>
+<!-- LIVE BOOKINGS -->
+<div class="popup" id="popup"></div>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
-
-/* ================= PAYSTACK ================= */
+// ================= PAYSTACK =================
 function payTour(amount){
   let handler = PaystackPop.setup({
     key: "pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
@@ -242,101 +267,82 @@ function payTour(amount){
   handler.openIframe();
 }
 
-/* ================= SLOT SYSTEM ================= */
+// ================= PERSISTENT REVIEWS =================
+const maraReviews = [
+"James (UK): Safari of a lifetime!",
+"Linda (Germany): Incredible wildlife!",
+"David (USA): Best experience ever!",
+"Anna (Italy): Truly magical!",
+"Peter (Canada): Worth every penny!"
+];
+
+const dubaiReviews = [
+"Sarah (USA): Pure luxury experience!",
+"Ahmed (UAE): Outstanding service!",
+"Maria (Spain): Stunning city!",
+"John (UK): Unforgettable trip!",
+"Fatima (Qatar): Amazing adventure!"
+];
+
+// save first time only
+if(!localStorage.getItem("maraReview")){
+  localStorage.setItem("maraReview", maraReviews[0]);
+}
+if(!localStorage.getItem("dubaiReview")){
+  localStorage.setItem("dubaiReview", dubaiReviews[0]);
+}
+
+// update without reset
+function updateReviews(){
+  let r1 = maraReviews[Math.floor(Math.random()*maraReviews.length)];
+  let r2 = dubaiReviews[Math.floor(Math.random()*dubaiReviews.length)];
+
+  localStorage.setItem("maraReview", r1);
+  localStorage.setItem("dubaiReview", r2);
+
+  document.getElementById("review-mara").innerText = r1;
+  document.getElementById("review-dubai").innerText = r2;
+}
+setInterval(updateReviews, 8000);
+
+// load saved on refresh
+document.getElementById("review-mara").innerText =
+  localStorage.getItem("maraReview");
+
+document.getElementById("review-dubai").innerText =
+  localStorage.getItem("dubaiReview");
+
+// ================= LIMITED SLOTS =================
 function reduceSlots(id){
   let el = document.getElementById(id);
   let num = parseInt(el.innerText.match(/\d+/));
   if(num > 1){
     num--;
-    el.innerText = "🔥 " + num + " slots left";
-    localStorage.setItem(id, num);
+    el.innerText = "🔥 Limited Offer: " + num + " left";
   }
 }
+setInterval(()=>reduceSlots("slot1"),15000);
+setInterval(()=>reduceSlots("slot2"),18000);
 
-/* restore slots (NO RESET ON REFRESH) */
-["slots1","slots2"].forEach(id=>{
-  let saved = localStorage.getItem(id);
-  if(saved){
-    document.getElementById(id).innerText = "🔥 " + saved + " slots left";
-  }
-});
-
-setInterval(()=>reduceSlots("slots1"),20000);
-setInterval(()=>reduceSlots("slots2"),25000);
-
-/* ================= LEFT REVIEWS (FIXED USERS - NOT RANDOM RESET) ================= */
-
-/* Each card has fixed rotating structured reviews (not random chaos) */
-const reviewData = {
-  reviewLeft1: [
-    "Daniel (UK): Best safari ever!",
-    "Emma (Germany): Unreal experience!",
-    "Chris (USA): 10/10 wildlife tour!"
-  ],
-  reviewLeft2: [
-    "Sarah (USA): Pure luxury!",
-    "Ahmed (UAE): Outstanding service!",
-    "Lina (France): Absolutely stunning!"
-  ]
-};
-
-let index1 = 0;
-let index2 = 0;
-
-setInterval(()=>{
-  index1 = (index1 + 1) % reviewData.reviewLeft1.length;
-  document.getElementById("reviewLeft1").innerText = reviewData.reviewLeft1[index1];
-  localStorage.setItem("reviewLeft1", reviewData.reviewLeft1[index1]);
-},8000);
-
-setInterval(()=>{
-  index2 = (index2 + 1) % reviewData.reviewLeft2.length;
-  document.getElementById("reviewLeft2").innerText = reviewData.reviewLeft2[index2];
-  localStorage.setItem("reviewLeft2", reviewData.reviewLeft2[index2]);
-},9000);
-
-/* restore reviews on refresh (NO RESET) */
-if(localStorage.getItem("reviewLeft1")){
-  document.getElementById("reviewLeft1").innerText = localStorage.getItem("reviewLeft1");
-}
-if(localStorage.getItem("reviewLeft2")){
-  document.getElementById("reviewLeft2").innerText = localStorage.getItem("reviewLeft2");
-}
-
-/* ================= RIGHT LIVE FEED (COMPLETELY DIFFERENT USERS) ================= */
-
-const liveUsers = [
-"John (UK) just booked Maasai Mara",
-"Maria (Italy) booked Dubai package",
-"Ali (UAE) confirmed safari trip",
-"James (Canada) reserved tour",
-"Lina (Germany) booked holiday",
-"David (Australia) joined trip",
-"Fatima (Qatar) secured booking",
-"Lucas (France) confirmed reservation",
-"Grace (Kenya) booked safari",
-"Tom (USA) just purchased tour"
+// ================= FAKE LIVE BOOKINGS =================
+const names = [
+"John (UK)","Mary (USA)","Ali (UAE)","James (Canada)",
+"Lina (Germany)","Sophia (Italy)","David (Australia)",
+"Ahmed (Qatar)","Grace (Kenya)"
 ];
 
-function pushFeed(){
-  let feed = document.getElementById("feed");
+function showPopup(){
+  let popup = document.getElementById("popup");
+  let name = names[Math.floor(Math.random()*names.length)];
 
-  let msg = liveUsers[Math.floor(Math.random()*liveUsers.length)];
+  popup.innerText = name + " just booked a trip!";
+  popup.style.display = "block";
 
-  let div = document.createElement("div");
-  div.className = "feed-item";
-  div.innerText = msg;
+  setTimeout(()=>popup.style.display="none",4000);
 
-  feed.prepend(div);
-
-  if(feed.children.length > 8){
-    feed.removeChild(feed.lastChild);
-  }
+  setTimeout(showPopup, Math.random()*12000 + 8000);
 }
-
-/* slower, realistic timing */
-setInterval(pushFeed, 12000);
-setTimeout(pushFeed, 3000);
+setTimeout(showPopup,5000);
 
 </script>
 
