@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +11,11 @@
 <style>
 body { 
   margin:0; 
-  font-family:'Segoe UI', sans-serif; 
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   background:#f4f7fb; 
 }
 
-/* NAV */
+/* NAVBAR */
 nav {
   background:#0a1f44;
   padding:12px 20px;
@@ -23,12 +24,26 @@ nav {
   align-items:center;
 }
 
-.logo { height:60px; }
+.nav-left {
+  display:flex;
+  align-items:center;
+}
+
+.logo {
+  height:60px;
+  width:auto;
+}
 
 nav a {
   color:white;
   margin:0 12px;
   text-decoration:none;
+  font-weight:600;
+  transition:0.3s;
+}
+
+nav a:hover {
+  color:#ff6600;
 }
 
 /* HERO */
@@ -38,12 +53,28 @@ nav a {
   justify-content:center;
   align-items:center;
   color:white;
-  background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+  text-align:center;
+  background:linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
              url("/images/hero.jpg") center/cover no-repeat;
 }
 
+.hero h1 {
+  font-size:46px;
+  letter-spacing:1px;
+  animation:fadeIn 1.2s ease;
+}
+
 /* SECTION */
-.section { padding:50px 40px; text-align:center; }
+.section { 
+  padding:50px 40px; 
+  text-align:center; 
+}
+
+.section h2{
+  font-size:32px;
+  margin-bottom:30px;
+  color:#0a1f44;
+}
 
 /* GRID */
 .grid {
@@ -58,76 +89,120 @@ nav a {
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
-  transition:0.4s;
+  text-align:left;
+  transition:all 0.4s ease;
+  cursor:pointer;
   position:relative;
-  opacity:0;
-  transform:translateY(40px);
 }
 
-/* ✨ SCROLL SHOW */
-.card.show {
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* ✨ GLOW EFFECT */
+/* HOVER + MOBILE TAP EFFECT */
 .card:hover,
-.card:active,
-.card.show {
-  box-shadow:0 0 25px rgba(255,102,0,0.5);
-  transform:translateY(-8px) scale(1.02);
+.card:active {
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
 }
 
-/* IMAGE */
+/* IMAGE ZOOM */
 .card img {
   width:100%;
   height:200px;
   object-fit:cover;
+  transition:transform 0.5s ease;
 }
 
-/* BADGE */
-.badge {
+.card:hover img,
+.card:active img {
+  transform:scale(1.1);
+}
+
+/* CARD CONTENT */
+.card-content { 
+  padding:25px; 
+  background:linear-gradient(to bottom, #ffffff, #f9fbff);
+  transition:0.3s;
+}
+
+.card h3 { 
+  margin-top:0; 
+  font-size:22px;
+  color:#0a1f44;
+  transition:0.3s;
+}
+
+/* TITLE HOVER EFFECT */
+.card:hover h3,
+.card:active h3 {
+  color:#ff6600;
+}
+
+/* DESCRIPTION */
+.desc {
+  font-size:15px;
+  color:#444;
+  line-height:1.6;
+  margin-bottom:18px;
+}
+
+/* BENEFITS */
+.benefits {
+  margin:15px 0 20px 0;
+  padding-left:0;
+  list-style:none;
+}
+
+.benefits li {
+  font-size:14px;
+  margin-bottom:8px;
+  color:#333;
+  padding-left:24px;
+  position:relative;
+  transition:0.3s;
+}
+
+/* ICON */
+.benefits li::before {
+  content:"✔";
   position:absolute;
-  top:15px;
-  left:15px;
-  background:#ff3b3b;
-  color:white;
-  padding:6px 12px;
-  font-size:12px;
-  border-radius:20px;
+  left:0;
+  color:#ff6600;
+  font-weight:bold;
 }
 
-/* CONTENT */
-.card-content { padding:25px; }
-
-/* RATING */
-.rating {
-  color:#ffaa00;
-  margin:5px 0;
+/* BENEFIT HOVER */
+.card:hover .benefits li,
+.card:active .benefits li {
+  transform:translateX(5px);
 }
 
 /* BUTTON */
 .btn {
+  display:inline-block;
   padding:12px 22px;
-  background:#ff6600;
+  background:linear-gradient(135deg,#ff7a18,#ff6600);
   color:white;
   border:none;
-  border-radius:30px;
   cursor:pointer;
+  border-radius:30px;
+  font-weight:bold;
+  transition:all 0.3s ease;
+  box-shadow:0 5px 15px rgba(255,102,0,0.3);
 }
 
-/* 🌍 LIVE POPUP */
-.popup {
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  background:white;
-  padding:12px 18px;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  font-size:14px;
-  display:none;
-  z-index:999;
+/* BUTTON HOVER */
+.btn:hover {
+  transform:scale(1.08);
+  box-shadow:0 8px 20px rgba(255,102,0,0.5);
+}
+
+/* BUTTON TAP (MOBILE) */
+.btn:active {
+  transform:scale(0.95);
+}
+
+/* FADE IN */
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -135,7 +210,10 @@ nav a {
 <body>
 
 <nav>
-  <img src="images/logo.png" class="logo">
+  <div class="nav-left">
+    <img src="images/logo.png" class="logo" alt="Logo">
+  </div>
+
   <div>
     <a href="index.html">Home</a>
     <a href="conference.html">Conferences</a>
@@ -153,23 +231,43 @@ nav a {
 <div class="grid">
 
 <div class="card">
-<div class="badge" id="slots1">🔥 Only 5 slots left</div>
 <img src="/images/maasai.jpg">
 <div class="card-content">
 <h3>Maasai Mara</h3>
-<div class="rating">★★★★★ (124 reviews)</div>
-<p>Experience one of Africa’s most iconic reserves.</p>
+
+<p class="desc">
+Experience one of Africa’s most iconic wildlife reserves, home to the Great Migration and the Big Five.
+</p>
+
+<ul class="benefits">
+<li>Guided game drives</li>
+<li>Luxury accommodation</li>
+<li>Maasai cultural visits</li>
+<li>Meals included</li>
+<li>Transport provided</li>
+</ul>
+
 <button class="btn" onclick="payTour(5000)">Book - KES 5000</button>
 </div>
 </div>
 
 <div class="card">
-<div class="badge" id="slots2">🔥 Only 7 slots left</div>
 <img src="/images/dubai.jpg">
 <div class="card-content">
 <h3>Dubai</h3>
-<div class="rating">★★★★☆ (89 reviews)</div>
-<p>Luxury and adventure combined.</p>
+
+<p class="desc">
+Luxury, innovation, and desert adventure combined into one unforgettable experience.
+</p>
+
+<ul class="benefits">
+<li>5-star hotel</li>
+<li>Desert safari</li>
+<li>City tour</li>
+<li>Shopping experience</li>
+<li>Airport transfers</li>
+</ul>
+
 <button class="btn" onclick="payTour(10000)">Book - KES 10000</button>
 </div>
 </div>
@@ -177,13 +275,9 @@ nav a {
 </div>
 </section>
 
-<!-- 🌍 LIVE BOOKINGS -->
-<div class="popup" id="popup"></div>
-
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
-// PAYSTACK
 function payTour(amount){
   let handler = PaystackPop.setup({
     key: "pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
@@ -194,47 +288,9 @@ function payTour(amount){
       alert("✅ Payment successful!");
     }
   });
+
   handler.openIframe();
 }
-
-// 🔥 AUTO SLOT REDUCTION
-function reduceSlots(id){
-  let el = document.getElementById(id);
-  let num = parseInt(el.innerText.match(/\d+/));
-  if(num > 1){
-    num--;
-    el.innerText = "🔥 Only " + num + " slots left";
-  }
-}
-setInterval(()=>reduceSlots("slots1"),10000);
-setInterval(()=>reduceSlots("slots2"),12000);
-
-// 🌍 LIVE BOOKINGS POPUP
-const names = ["John (UK)","Mary (USA)","Ali (UAE)","James (Canada)","Lina (Germany)"];
-
-function showPopup(){
-  let popup = document.getElementById("popup");
-  let name = names[Math.floor(Math.random()*names.length)];
-  popup.innerText = name + " just booked a trip!";
-  popup.style.display="block";
-
-  setTimeout(()=>popup.style.display="none",4000);
-}
-setInterval(showPopup,8000);
-
-// ✨ SCROLL ANIMATION
-const cards = document.querySelectorAll(".card");
-
-function reveal(){
-  cards.forEach(card=>{
-    let top = card.getBoundingClientRect().top;
-    if(top < window.innerHeight - 50){
-      card.classList.add("show");
-    }
-  });
-}
-window.addEventListener("scroll", reveal);
-window.addEventListener("load", reveal);
 </script>
 
 </body>
