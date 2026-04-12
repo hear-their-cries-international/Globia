@@ -77,21 +77,24 @@ nav a:hover { color:#ff6600; }
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
-  transition:0.4s;
+  transition:all 0.4s ease;
+  cursor:pointer;
   position:relative;
 }
 
+/* HOVER + MOBILE */
 .card:hover,
 .card:active {
   transform:translateY(-10px) scale(1.02);
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
 }
 
-/* IMAGE */
+/* IMAGE ZOOM */
 .card img {
   width:100%;
   height:200px;
   object-fit:cover;
-  transition:0.5s;
+  transition:transform 0.5s ease;
 }
 
 .card:hover img { transform:scale(1.1); }
@@ -101,12 +104,12 @@ nav a:hover { color:#ff6600; }
 
 .card h3 { color:#0a1f44; }
 
-/* ⭐ RATING */
+/* ⭐ STARS */
 .stars {
   display:flex;
   gap:5px;
-  cursor:pointer;
   margin:8px 0;
+  cursor:pointer;
 }
 
 .star {
@@ -117,12 +120,12 @@ nav a:hover { color:#ff6600; }
 
 .star.active { color:#ffaa00; }
 
-/* REVIEW TEXT */
+/* 💬 REVIEWS */
 .review {
   font-size:13px;
   color:#666;
-  margin-bottom:10px;
   font-style:italic;
+  margin-bottom:10px;
 }
 
 /* DESCRIPTION */
@@ -154,12 +157,16 @@ nav a:hover { color:#ff6600; }
 /* BUTTON */
 .btn {
   padding:12px 22px;
-  background:#ff6600;
+  background:linear-gradient(135deg,#ff7a18,#ff6600);
   color:white;
   border:none;
   border-radius:30px;
   cursor:pointer;
+  transition:0.3s;
 }
+
+.btn:hover { transform:scale(1.08); }
+.btn:active { transform:scale(0.95); }
 
 /* 🌍 POPUP */
 .popup {
@@ -173,6 +180,7 @@ nav a:hover { color:#ff6600; }
   display:none;
   font-size:14px;
   z-index:999;
+  animation:fadeIn 0.5s ease;
 }
 
 /* FADE */
@@ -213,7 +221,7 @@ nav a:hover { color:#ff6600; }
 
 <h3>Maasai Mara</h3>
 
-<div class="stars" data-card="1">
+<div class="stars">
 <span class="star">★</span>
 <span class="star">★</span>
 <span class="star">★</span>
@@ -221,9 +229,9 @@ nav a:hover { color:#ff6600; }
 <span class="star">★</span>
 </div>
 
-<div class="review" id="review1">"Amazing safari experience!"</div>
+<div class="review" id="review1">"Unforgettable safari!"</div>
 
-<p class="desc">Experience one of Africa’s most iconic wildlife reserves.</p>
+<p class="desc">Experience one of Africa’s most iconic reserves.</p>
 
 <ul class="benefits">
 <li>Guided game drives</li>
@@ -244,7 +252,7 @@ nav a:hover { color:#ff6600; }
 
 <h3>Dubai</h3>
 
-<div class="stars" data-card="2">
+<div class="stars">
 <span class="star">★</span>
 <span class="star">★</span>
 <span class="star">★</span>
@@ -252,7 +260,7 @@ nav a:hover { color:#ff6600; }
 <span class="star">★</span>
 </div>
 
-<div class="review" id="review2">"Luxury at its best!"</div>
+<div class="review" id="review2">"Luxury at its finest!"</div>
 
 <p class="desc">Luxury and adventure combined.</p>
 
@@ -271,7 +279,7 @@ nav a:hover { color:#ff6600; }
 </div>
 </section>
 
-<!-- 🌍 LIVE BOOKINGS -->
+<!-- 🌍 POPUP -->
 <div class="popup" id="popup"></div>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
@@ -303,22 +311,26 @@ document.querySelectorAll(".stars").forEach(starBox=>{
   });
 });
 
-// 💬 ROTATING REVIEWS
-const reviews1 = ["Amazing safari!", "Best trip ever!", "Loved the wildlife!"];
-const reviews2 = ["Luxury experience!", "Dubai is incredible!", "Highly recommend!"];
+// 💬 REVIEWS ROTATION
+const reviews = [
+"Absolutely amazing!", "Best trip ever!", "Highly recommended!",
+"Wonderful experience!", "Worth every penny!", "Incredible journey!"
+];
 
 setInterval(()=>{
   document.getElementById("review1").innerText =
-    reviews1[Math.floor(Math.random()*reviews1.length)];
-},4000);
-
-setInterval(()=>{
+    reviews[Math.floor(Math.random()*reviews.length)];
   document.getElementById("review2").innerText =
-    reviews2[Math.floor(Math.random()*reviews2.length)];
-},5000);
+    reviews[Math.floor(Math.random()*reviews.length)];
+},6000);
 
-// 🌍 LIVE BOOKINGS
-const names = ["John (UK)","Mary (USA)","Ali (UAE)","James (Canada)"];
+// 🌍 REALISTIC BOOKINGS (LARGE POOL)
+const names = [
+"John (UK)","Mary (USA)","Ali (UAE)","James (Canada)",
+"Lina (Germany)","David (Australia)","Sophia (Italy)",
+"Ahmed (Qatar)","Lucas (France)","Grace (Kenya)",
+"Daniel (South Africa)","Eva (Spain)"
+];
 
 function showPopup(){
   let popup = document.getElementById("popup");
@@ -327,9 +339,13 @@ function showPopup(){
   popup.style.display="block";
 
   setTimeout(()=>popup.style.display="none",4000);
+
+  // ⏱ RANDOM INTERVAL (8s - 18s)
+  setTimeout(showPopup, Math.random()*10000 + 8000);
 }
 
-setInterval(showPopup,7000);
+// start once
+setTimeout(showPopup,5000);
 </script>
 
 </body>
