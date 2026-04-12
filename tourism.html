@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" type="image/png" href="images/logo.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/logo.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/logo.png">
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tourism</title>
+<title>Tourism</title>        
 
 <style>
 body { 
   margin:0; 
-  font-family:'Segoe UI', sans-serif; 
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
   background:#f4f7fb; 
 }
 
-/* NAV */
+/* NAVBAR */
 nav {
   background:#0a1f44;
   padding:12px 20px;
@@ -23,9 +24,16 @@ nav {
   align-items:center;
 }
 
+.nav-left { display:flex; align-items:center; }
+
 .logo { height:60px; }
 
-nav a { color:white; margin:0 12px; text-decoration:none; }
+nav a {
+  color:white;
+  margin:0 12px;
+  text-decoration:none;
+  font-weight:600;
+}
 
 /* HERO */
 .hero {
@@ -34,12 +42,38 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   justify-content:center;
   align-items:center;
   color:white;
-  background:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),
-  url("/images/hero.jpg") center/cover no-repeat;
+  text-align:center;
+  background:linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
+             url("/images/hero.jpg") center/cover no-repeat;
 }
 
-.section { padding:50px 40px; text-align:center; }
+.hero h1 { font-size:46px; }
 
+/* MAIN SECTION LAYOUT (LEFT CARDS + RIGHT LIVE REVIEWS) */
+.section-wrapper{
+  display:flex;
+  gap:20px;
+  padding:50px 40px;
+}
+
+/* LEFT SIDE */
+.section-left{
+  flex:2;
+}
+
+/* RIGHT SIDE LIVE REVIEWS */
+.section-right{
+  flex:1;
+  background:white;
+  border-radius:15px;
+  padding:15px;
+  height:fit-content;
+  box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  position:sticky;
+  top:20px;
+}
+
+/* GRID */
 .grid {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
@@ -52,68 +86,86 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
+  transition:0.4s;
   position:relative;
 }
 
-/* SLOT */
+.card:hover { transform:translateY(-10px) scale(1.02); }
+
+/* IMAGE */
+.card img {
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+/* CONTENT */
+.card-content { padding:25px; }
+
+/* ⭐ STARS */
+.stars {
+  color:#ffaa00;
+  margin:6px 0;
+}
+
+/* 💬 LEFT REVIEWS */
+.review {
+  font-size:13px;
+  color:#666;
+  font-style:italic;
+  margin-bottom:10px;
+}
+
+/* 🔥 SLOT BADGE */
 .slots {
   position:absolute;
   top:10px;
   left:10px;
-  background:red;
+  background:#ff3b3b;
   color:white;
   padding:5px 10px;
   border-radius:20px;
   font-size:12px;
 }
 
-/* IMAGE */
-.card img { width:100%; height:200px; object-fit:cover; }
-
-/* CONTENT */
-.card-content { padding:25px; }
-
-.stars { color:#ffaa00; }
-
-/* ⭐ REVIEW BOXES */
-.review-box {
-  background:#f9fbff;
-  padding:10px;
-  border-radius:10px;
-  margin-top:10px;
-  font-size:13px;
-  font-style:italic;
-  color:#444;
-  min-height:40px;
-}
-
 /* BUTTON */
 .btn {
   padding:12px 22px;
-  background:#ff6600;
+  background:linear-gradient(135deg,#ff7a18,#ff6600);
   color:white;
   border:none;
   border-radius:30px;
   cursor:pointer;
 }
 
-/* SCROLL REVIEWS */
-.review-scroll {
-  overflow:hidden;
-  background:#fff;
-  padding:12px 0;
+/* RIGHT SCROLL AREA */
+.review-box-title{
+  font-weight:bold;
+  margin-bottom:10px;
+  color:#0a1f44;
 }
 
-.review-track {
+.review-stream{
   display:flex;
-  gap:40px;
-  white-space:nowrap;
-  animation:move 25s linear infinite;
+  flex-direction:column;
+  gap:12px;
+  max-height:500px;
+  overflow:hidden;
 }
 
-@keyframes move {
-  from { transform:translateX(100%); }
-  to { transform:translateX(-100%); }
+/* EACH LIVE MESSAGE */
+.live-msg{
+  font-size:13px;
+  padding:10px;
+  background:#f5f7ff;
+  border-radius:10px;
+  animation:fadeIn 0.6s ease;
+}
+
+/* FADE */
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1;}
 }
 </style>
 </head>
@@ -121,10 +173,14 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
 <body>
 
 <nav>
-  <img src="images/logo.png" class="logo">
+  <div class="nav-left">
+    <img src="images/logo.png" class="logo">
+  </div>
+
   <div>
-    <a href="#">Home</a>
-    <a href="#">Tours</a>
+    <a href="index.html">Home</a>
+    <a href="conference.html">Conferences</a>
+    <a href="tourism.html">Tourism</a>
   </div>
 </nav>
 
@@ -132,121 +188,167 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   <h1>Explore Tourism</h1>
 </div>
 
+<!-- MAIN WRAPPER -->
+<div class="section-wrapper">
+
+<!-- ================= LEFT SIDE DESTINATIONS ================= -->
+<div class="section-left">
+
 <section class="section">
 <h2>Destinations</h2>
 
 <div class="grid">
 
-<!-- ================= MAASAI MARA ================= -->
+<!-- CARD 1 -->
 <div class="card">
-<div class="slots" id="slots1">🔥 6 slots left</div>
+<div class="slots" id="slots1">🔥 Only 6 slots left</div>
 <img src="/images/maasai.jpg">
-
 <div class="card-content">
+
 <h3>Maasai Mara</h3>
+
+<!-- ⭐ MAIN REVIEW (LEFT SIDE ONLY) -->
 <div class="stars">★★★★★</div>
+<div class="review" id="review1">"Best safari experience ever!"</div>
 
-<p>Big Five safari experience.</p>
+<p class="desc">Experience Africa’s most iconic wildlife reserve.</p>
 
-<div class="review-box" id="leftReview"></div>
+<ul>
+<li>Game drives</li>
+<li>Luxury stay</li>
+<li>Cultural visits</li>
+<li>Meals included</li>
+<li>Transport</li>
+</ul>
 
 <button class="btn" onclick="payTour(5000)">Book - KES 5000</button>
+
 </div>
 </div>
 
-<!-- ================= DUBAI ================= -->
+<!-- CARD 2 -->
 <div class="card">
-<div class="slots" id="slots2">🔥 8 slots left</div>
+<div class="slots" id="slots2">🔥 Only 8 slots left</div>
 <img src="/images/dubai.jpg">
-
 <div class="card-content">
+
 <h3>Dubai</h3>
+
+<!-- ⭐ MAIN REVIEW -->
 <div class="stars">★★★★☆</div>
+<div class="review" id="review2">"Luxury beyond imagination!"</div>
 
-<p>Luxury desert & city experience.</p>
+<p class="desc">Luxury and adventure combined.</p>
 
-<div class="review-box" id="rightReview"></div>
+<ul>
+<li>5-star hotel</li>
+<li>Desert safari</li>
+<li>City tour</li>
+<li>Shopping</li>
+<li>Transfers</li>
+</ul>
 
 <button class="btn" onclick="payTour(10000)">Book - KES 10000</button>
+
 </div>
 </div>
 
 </div>
 </section>
 
-<!-- SCROLL REVIEWS -->
-<div class="review-scroll">
-  <div class="review-track" id="track"></div>
+</div>
+
+<!-- ================= RIGHT SIDE LIVE REVIEWS ================= -->
+<div class="section-right">
+
+<!-- COMMENT: LIVE REAL-TIME USER FEEDBACK PANEL -->
+<div class="review-box-title">🌍 Live Traveller Reviews</div>
+<div class="review-stream" id="liveReviews"></div>
+
+</div>
+
 </div>
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
-// PAYSTACK
+
+/* ================= PAYMENT ================= */
 function payTour(amount){
   let handler = PaystackPop.setup({
     key: "pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
     email: "customer@email.com",
     amount: amount * 100,
     currency: "KES",
-    callback: ()=> alert("Payment successful!")
+    callback: function(){
+      alert("✅ Payment successful!");
+    }
   });
   handler.openIframe();
 }
 
-/* ================= LEFT REVIEWS (MAASAI MARA - DIFFERENT USERS) ================= */
-const leftReviews = [
-"Peter (UK): Best safari ever!",
-"Susan (USA): Unreal experience!",
-"David (Canada): Saw all Big Five!",
-"Grace (Kenya): Magical journey!",
-"Ahmed (UAE): Worth every dollar!",
-"Linda (Germany): Stunning views!",
-"Paul (Australia): Incredible guides!"
-];
-
-/* ================= RIGHT REVIEWS (DUBAI - COMPLETELY DIFFERENT USERS) ================= */
-const rightReviews = [
-"Ali (Dubai): Luxury at its peak!",
-"Sophia (Italy): Amazing city tour!",
-"John (USA): Burj Khalifa view wow!",
-"Fatima (Qatar): Perfect holiday!",
-"Lucas (France): Super clean city!",
-"Emma (UK): Desert safari amazing!",
-"Zain (India): Best experience ever!"
-];
-
-/* ROTATE SEPARATELY */
-setInterval(()=>{
-  document.getElementById("leftReview").innerText =
-  leftReviews[Math.floor(Math.random()*leftReviews.length)];
-},5000);
-
-setInterval(()=>{
-  document.getElementById("rightReview").innerText =
-  rightReviews[Math.floor(Math.random()*rightReviews.length)];
-},6000);
-
-/* ================= SCROLL REVIEWS ================= */
-const all = [...leftReviews, ...rightReviews];
-const track = document.getElementById("track");
-
-all.forEach(r=>{
-  let span = document.createElement("span");
-  span.innerText = r;
-  track.appendChild(span);
-});
-
-/* ================= SLOT DECREASE ================= */
-function reduce(id){
+/* ================= SLOT REDUCTION ================= */
+function reduceSlots(id){
   let el = document.getElementById(id);
   let num = parseInt(el.innerText.match(/\d+/));
   if(num > 1){
-    el.innerText = "🔥 " + (num-1) + " slots left";
+    num--;
+    el.innerText = "🔥 Only " + num + " slots left";
   }
 }
-setInterval(()=>reduce("slots1"),14000);
-setInterval(()=>reduce("slots2"),17000);
+setInterval(()=>reduceSlots("slots1"),16000);
+setInterval(()=>reduceSlots("slots2"),20000);
+
+/* ================= LEFT REVIEWS ================= */
+const leftReviews = [
+"Absolutely magical safari!",
+"Perfect wildlife experience!",
+"Best trip of my life!",
+"Unforgettable journey!",
+"Amazing guides and service!"
+];
+
+setInterval(()=>{
+  document.getElementById("review1").innerText =
+    leftReviews[Math.floor(Math.random()*leftReviews.length)];
+
+  document.getElementById("review2").innerText =
+    leftReviews[Math.floor(Math.random()*leftReviews.length)];
+},7000);
+
+/* ================= RIGHT SIDE LIVE FEED (DIFFERENT USERS) ================= */
+const liveUsers = [
+"Emily (UK): Just returned from Maasai Mara — unbelievable!",
+"Michael (USA): Dubai tour was beyond expectations!",
+"Sophia (Italy): Best organized travel experience ever!",
+"Daniel (Germany): Highly professional service!",
+"Aisha (UAE): Loved every moment of the safari!",
+"James (Canada): Worth every cent!",
+"Fatima (Qatar): Excellent hospitality!",
+"Liam (Australia): Incredible desert experience!",
+"Grace (Kenya): Proud of this tourism company!",
+"Lucas (France): 10/10 experience!",
+"Zara (Spain): Perfect honeymoon package!",
+"Noah (USA): Would book again instantly!"
+];
+
+function pushLiveReview(){
+  const box = document.getElementById("liveReviews");
+
+  let msg = document.createElement("div");
+  msg.className = "live-msg";
+  msg.innerText = liveUsers[Math.floor(Math.random()*liveUsers.length)];
+
+  box.prepend(msg);
+
+  // limit messages
+  if(box.children.length > 12){
+    box.removeChild(box.lastChild);
+  }
+}
+
+setInterval(pushLiveReview, 5000);
+
 </script>
 
 </body>
