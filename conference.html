@@ -24,15 +24,8 @@ nav {
   justify-content:space-between;
   align-items:center;
 }
-
 .logo { height:50px; }
-
-nav a {
-  color:white;
-  margin:0 12px;
-  text-decoration:none;
-  font-weight:600;
-}
+nav a { color:white; margin:0 12px; text-decoration:none; }
 
 /* HERO */
 .hero {
@@ -43,7 +36,7 @@ nav a {
   flex-direction:column;
   color:white;
   text-align:center;
-  background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),
+  background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
              url("/images/hero.jpg") center/cover no-repeat;
 }
 
@@ -66,20 +59,31 @@ nav a {
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
-  transition:0.4s;
+  transition:0.5s;
   position:relative;
 }
 
 .card:hover {
   transform:translateY(-10px) scale(1.02);
-  box-shadow:0 0 25px rgba(255,102,0,0.4);
+  box-shadow:0 0 35px rgba(255,102,0,0.5);
 }
 
-/* MEDIA (VIDEO OR IMAGE) */
+/* 🔥 CINEMATIC IMAGE EFFECT */
+.media-wrapper {
+  overflow:hidden;
+  height:220px;
+}
+
 .media {
   width:100%;
-  height:200px;
+  height:100%;
   object-fit:cover;
+  animation:zoomMove 12s ease-in-out infinite alternate;
+}
+
+@keyframes zoomMove {
+  0% { transform:scale(1) translate(0,0); }
+  100% { transform:scale(1.15) translate(-10px,-10px); }
 }
 
 /* BADGE */
@@ -100,32 +104,24 @@ nav a {
   text-align:left;
 }
 
-.card h3 {
-  margin-top:0;
-  color:#0a1f44;
-}
+.card h3 { color:#0a1f44; }
 
 /* SUMMARY */
 .summary {
   font-size:14px;
   color:#555;
-  margin-bottom:10px;
 }
 
 /* BENEFITS */
 .benefits {
   list-style:none;
   padding:0;
-  margin-bottom:15px;
 }
-
 .benefits li {
   padding-left:20px;
   position:relative;
   margin-bottom:6px;
-  font-size:14px;
 }
-
 .benefits li::before {
   content:"✔";
   position:absolute;
@@ -133,11 +129,11 @@ nav a {
   color:#ff6600;
 }
 
-/* INPUTS */
+/* INPUT */
 select, input {
   width:100%;
   padding:10px;
-  margin-bottom:10px;
+  margin:10px 0;
   border-radius:6px;
   border:1px solid #ccc;
 }
@@ -154,14 +150,24 @@ select, input {
   font-weight:bold;
   transition:0.3s;
 }
+.btn:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(255,102,0,0.6);
+}
 
-.btn:hover { transform:scale(1.05); }
+/* ✨ FLOAT ANIMATION */
+.card {
+  animation:fadeUp 1s ease forwards;
+}
+@keyframes fadeUp {
+  from {opacity:0; transform:translateY(30px);}
+  to {opacity:1; transform:translateY(0);}
+}
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <nav>
   <img src="images/logo.png" class="logo">
   <div>
@@ -171,13 +177,11 @@ select, input {
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <h1>Global Conferences</h1>
   <p>Connecting Ideas, People & Opportunities</p>
 </section>
 
-<!-- SECTION -->
 <section class="section">
 <h2>Conference Packages</h2>
 
@@ -187,27 +191,22 @@ select, input {
 <div class="card">
 <div class="badge">🔥 Limited Offer</div>
 
-<!-- ✅ YOU CAN SWITCH VIDEO TO IMAGE HERE -->
-<video class="media" controls>
-  <source src="https://www.w3schools.com/html/mov_bbb.mp4">
-</video>
-
-<!-- 👉 TO USE IMAGE INSTEAD, REPLACE ABOVE WITH:
+<div class="media-wrapper">
 <img src="images/conference1.jpg" class="media">
--->
+</div>
 
 <div class="card-content">
 <h3>Investor–Producer Conference</h3>
 
 <p class="summary">
-Connect investors with producers and unlock global business opportunities through networking and strategic partnerships.
+Meet global investors and producers in a high-impact networking environment designed to unlock real business opportunities.
 </p>
 
 <ul class="benefits">
-<li>Access to top investors</li>
-<li>Business networking sessions</li>
+<li>Global investor access</li>
+<li>Live networking sessions</li>
 <li>Expert keynote speakers</li>
-<li>Exclusive VIP lounges</li>
+<li>VIP lounge access</li>
 </ul>
 
 <select id="ticket1">
@@ -225,24 +224,22 @@ Connect investors with producers and unlock global business opportunities throug
 <div class="card">
 <div class="badge">🔥 Limited Offer</div>
 
-<video class="media" controls>
-  <source src="https://www.w3schools.com/html/movie.mp4">
-</video>
-
-<!-- 👉 Replace with image if needed -->
+<div class="media-wrapper">
+<img src="images/conference2.jpg" class="media">
+</div>
 
 <div class="card-content">
 <h3>Youth Leadership Conference</h3>
 
 <p class="summary">
-Empowering the next generation of leaders through mentorship, innovation, and global collaboration.
+Empowering youth through leadership, mentorship, and global collaboration experiences.
 </p>
 
 <ul class="benefits">
-<li>Leadership workshops</li>
+<li>Leadership training</li>
 <li>Mentorship programs</li>
 <li>Networking opportunities</li>
-<li>Career development sessions</li>
+<li>Career growth sessions</li>
 </ul>
 
 <select id="ticket2">
