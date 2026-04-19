@@ -34,8 +34,7 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   justify-content:center;
   align-items:center;
   color:white;
-  background:linear-gradient(rgba(0,0,0,0.0),rgba(0,0,0,0.0)),
-  url("/images/hero.jpg") center/cover no-repeat;
+  background:url("/images/hero.jpg") center/cover no-repeat;
 }
 .hero h1 { font-size:46px; }
 
@@ -62,16 +61,13 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
 
 .card:hover {
   transform:translateY(-10px) scale(1.02);
-  box-shadow:0 0 25px rgba(255,102,0,0.4);
 }
 
 .card img {
   width:100%;
   height:200px;
   object-fit:cover;
-  transition:0.5s;
 }
-.card:hover img { transform:scale(1.1); }
 
 /* BADGES */
 .badge {
@@ -86,35 +82,13 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
 }
 .offer { top:40px; background:#ff6600; }
 
-/* CONTENT */
 .card-content { padding:25px; }
-h3 { color:#0a1f44; }
-
-/* STARS */
-.stars { color:#ffaa00; margin:5px 0; }
-
-/* REVIEW */
+.stars { color:#ffaa00; }
 .review-box {
   background:#f9fbff;
   padding:10px;
   border-radius:10px;
   font-size:13px;
-  color:#555;
-  margin-bottom:10px;
-}
-
-/* BENEFITS */
-.benefits { list-style:none; padding:0; }
-.benefits li {
-  padding-left:20px;
-  position:relative;
-  margin-bottom:6px;
-}
-.benefits li::before {
-  content:"✔";
-  position:absolute;
-  left:0;
-  color:#ff6600;
 }
 
 /* BUTTON */
@@ -125,22 +99,6 @@ h3 { color:#0a1f44; }
   border:none;
   border-radius:30px;
   cursor:pointer;
-  font-weight:bold;
-  transition:0.3s;
-}
-.btn:hover { transform:scale(1.05); }
-
-/* POPUP */
-.popup {
-  position:fixed;
-  bottom:20px;
-  left:20px;
-  background:white;
-  padding:12px;
-  border-radius:10px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2);
-  display:none;
-  font-size:14px;
 }
 
 /* MODAL */
@@ -152,7 +110,6 @@ h3 { color:#0a1f44; }
   display:none;
   justify-content:center;
   align-items:center;
-  backdrop-filter: blur(6px);
 }
 
 .modal-content {
@@ -160,7 +117,6 @@ h3 { color:#0a1f44; }
   padding:30px;
   border-radius:18px;
   width:340px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.3);
 }
 
 .modal-content input,
@@ -168,8 +124,6 @@ h3 { color:#0a1f44; }
   width:100%;
   padding:12px;
   margin:10px 0;
-  border-radius:10px;
-  border:1px solid #ddd;
 }
 
 .close {
@@ -183,7 +137,6 @@ h3 { color:#0a1f44; }
   color:white;
   padding:40px;
   text-align:center;
-  margin-top:50px;
 }
 </style>
 </head>
@@ -206,18 +159,34 @@ h3 { color:#0a1f44; }
 
 <div class="grid">
 
+<!-- MAASAI -->
 <div class="card">
+<div class="badge">🔥 Limited Offer</div>
+<div class="badge offer">6 Slots Left</div>
+
 <img src="/images/maasai.jpg">
+
 <div class="card-content">
 <h3>Maasai Mara</h3>
+<div class="stars">★★★★★</div>
+<div class="review-box">Best safari experience ever!</div>
+
 <button class="btn" onclick="openBooking('Maasai Mara',5000)">Book Now</button>
 </div>
 </div>
 
+<!-- DUBAI -->
 <div class="card">
+<div class="badge">🔥 Limited Offer</div>
+<div class="badge offer">8 Slots Left</div>
+
 <img src="/images/dubai.jpg">
+
 <div class="card-content">
 <h3>Dubai</h3>
+<div class="stars">★★★★☆</div>
+<div class="review-box">Luxury beyond expectations!</div>
+
 <button class="btn" onclick="openBooking('Dubai',10000)">Book Now</button>
 </div>
 </div>
@@ -229,8 +198,8 @@ h3 { color:#0a1f44; }
 <div class="modal" id="modal">
   <div class="modal-content">
     <span class="close" onclick="closeModal()">✖</span>
-    <h3 id="tourName"></h3>
 
+    <h3 id="tourName"></h3>
     <input type="email" id="email" placeholder="Enter Email">
 
     <select id="level" onchange="updatePrice()">
@@ -240,7 +209,7 @@ h3 { color:#0a1f44; }
     </select>
 
     <p><b>Total: $<span id="price"></span></b></p>
-    <small>You will be charged in KES at current exchange rate</small>
+    <small>You will be charged in KES</small>
 
     <button class="btn" onclick="confirmPay()">Pay Securely</button>
   </div>
@@ -255,18 +224,16 @@ h3 { color:#0a1f44; }
 
 <script>
 
-let baseAmount = 0;
+let rate = 130;
+let baseUSD = 0;
 let finalUSD = 0;
 let tour = "";
 
-// 🔥 exchange rate (adjust anytime)
-let rate = 130;
-
-function openBooking(name, amountKES){
+function openBooking(name, kes){
   tour = name;
-  baseAmount = amountKES / rate; // convert to USD display
-  document.getElementById("tourName").innerText = "Book " + name;
+  baseUSD = kes / rate;
   document.getElementById("modal").style.display = "flex";
+  document.getElementById("tourName").innerText = "Book " + name;
   updatePrice();
 }
 
@@ -277,22 +244,21 @@ function closeModal(){
 function updatePrice(){
   let level = document.getElementById("level").value;
 
-  if(level === "vip") finalUSD = baseAmount * 1.5;
-  else if(level === "economy") finalUSD = baseAmount * 0.8;
-  else finalUSD = baseAmount;
+  if(level==="vip") finalUSD = baseUSD*1.5;
+  else if(level==="economy") finalUSD = baseUSD*0.8;
+  else finalUSD = baseUSD;
 
   document.getElementById("price").innerText = finalUSD.toFixed(2);
 }
 
 function confirmPay(){
   let email = document.getElementById("email").value;
-
-  let amountKES = finalUSD * rate;
+  let kesAmount = finalUSD * rate;
 
   let handler = PaystackPop.setup({
     key: "pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
     email: email,
-    amount: amountKES * 100,
+    amount: kesAmount * 100,
     currency: "KES",
     channels: ['card','bank_transfer'],
     callback: function(){
@@ -303,6 +269,18 @@ function confirmPay(){
 
   handler.openIframe();
 }
+
+/* SCROLL FIX */
+const cards = document.querySelectorAll(".card");
+function reveal(){
+  cards.forEach(c=>{
+    if(c.getBoundingClientRect().top < window.innerHeight){
+      c.classList.add("show");
+    }
+  });
+}
+window.addEventListener("scroll",reveal);
+window.addEventListener("load",reveal);
 
 </script>
 
