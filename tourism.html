@@ -292,7 +292,19 @@ h3 { color:#0a1f44; }
 </div>
 
 <div class="popup" id="popup"></div>
+// SCROLL ANIMATION (FIXED)
+const cards = document.querySelectorAll(".card");
 
+function reveal(){
+  cards.forEach(c=>{
+    if(c.getBoundingClientRect().top < window.innerHeight - 80){
+      c.classList.add("show");
+    }
+  });
+}
+
+window.addEventListener("scroll", reveal);
+window.addEventListener("load", reveal);
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <script>
