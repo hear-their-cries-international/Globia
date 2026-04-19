@@ -10,6 +10,7 @@
 <title>Global Conferences</title>
 
 <style>
+
 body {
   margin:0;
   font-family:'Segoe UI', sans-serif;
@@ -36,7 +37,7 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   flex-direction:column;
   color:white;
   text-align:center;
-  background:linear-gradient(rgba(0,0,0,0.0),rgba(0,0,0,0.0)),
+  background:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),
              url("images/conference.jpg") center/cover no-repeat;
 }
 
@@ -59,39 +60,13 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   border-radius:18px;
   overflow:hidden;
   box-shadow:0 10px 25px rgba(0,0,0,0.12);
-  transition:0.5s;
+  transition:0.4s;
   position:relative;
 }
 
 .card:hover {
-  transform:translateY(-10px) scale(1.02);
-  box-shadow:0 0 35px rgba(255,102,0,0.5);
-}
-
-/* 🔥 CINEMATIC ANIMATED IMAGE */
-.media-wrapper {
-  position:relative;
-  height:220px;
-  overflow:hidden;
-}
-
-/* MAIN IMAGE */
-.media {
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  animation:cinematicMove 10s ease-in-out infinite alternate;
-  transition:0.5s;
-}
-
-/* CINEMATIC ZOOM + PAN */
-@keyframes cinematicMove {
-  0% { transform:scale(1) translate(0,0); }
-  50% { transform:scale(1.12) translate(-10px, -5px); }
-  100% { transform:scale(1.2) translate(10px, 10px); }
-}
-
-/* SOUND BUTTON */
+  transform:translateY(-8px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.2);
 }
 
 /* BADGE */
@@ -106,6 +81,39 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   font-size:12px;
 }
 
+/* MEDIA */
+.media-wrapper {
+  position:relative;
+  height:220px;
+  overflow:hidden;
+}
+
+.media {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  animation:cinematicMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes cinematicMove {
+  0% { transform:scale(1) translate(0,0); }
+  50% { transform:scale(1.1) translate(-10px,-5px); }
+  100% { transform:scale(1.15) translate(10px,10px); }
+}
+
+/* SOUND BUTTON */
+.sound-btn {
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  background:rgba(0,0,0,0.7);
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:20px;
+  cursor:pointer;
+}
+
 /* CONTENT */
 .card-content {
   padding:20px;
@@ -113,11 +121,10 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
 }
 
 .card h3 {
-  margin-top:0;
+  margin:0;
   color:#0a1f44;
 }
 
-/* SUMMARY */
 .summary {
   font-size:14px;
   color:#555;
@@ -128,11 +135,13 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
   list-style:none;
   padding:0;
 }
+
 .benefits li {
   padding-left:20px;
   position:relative;
   margin-bottom:6px;
 }
+
 .benefits li::before {
   content:"✔";
   position:absolute;
@@ -143,10 +152,17 @@ nav a { color:white; margin:0 12px; text-decoration:none; }
 /* INPUTS */
 select, input {
   width:100%;
-  padding:10px;
+  padding:12px;
   margin:10px 0;
-  border-radius:6px;
-  border:1px solid #ccc;
+  border-radius:8px;
+  border:1px solid #ddd;
+  outline:none;
+  transition:0.3s;
+}
+
+select:focus, input:focus {
+  border-color:#ff6600;
+  box-shadow:0 0 8px rgba(255,102,0,0.2);
 }
 
 /* BUTTON */
@@ -161,14 +177,31 @@ select, input {
   font-weight:bold;
   transition:0.3s;
 }
+
 .btn:hover {
-  transform:scale(1.05);
-  box-shadow:0 0 20px rgba(255,102,0,0.6);
+  transform:scale(1.03);
+  box-shadow:0 0 18px rgba(255,102,0,0.4);
 }
 
-/* IMAGE → STATIC MODE */
-
+/* SECONDARY BUTTON */
+.btn-secondary {
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  background:#333;
+  color:white;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
 }
+
+/* TRUST BADGE */
+.secure {
+  font-size:12px;
+  color:green;
+  margin-top:8px;
+}
+
 </style>
 </head>
 
@@ -193,15 +226,14 @@ select, input {
 
 <div class="grid">
 
-<!-- ================= CARD 1 ================= -->
+<!-- CARD 1 -->
 <div class="card" id="card1">
 
 <div class="badge">🔥 Limited Offer</div>
 
 <div class="media-wrapper">
   <img src="images/conference1.jpg" class="media">
-  
-  <!-- SOUND (OPTIONAL) -->
+
   <audio id="sound1" loop>
     <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3">
   </audio>
@@ -210,10 +242,11 @@ select, input {
 </div>
 
 <div class="card-content">
+
 <h3>Investor–Producer Conference</h3>
 
 <p class="summary">
-Global investors meet producers to unlock high-value business opportunities.
+Global investors meet producers to unlock high-value opportunities.
 </p>
 
 <ul class="benefits">
@@ -230,16 +263,15 @@ Global investors meet producers to unlock high-value business opportunities.
 
 <input id="email1" placeholder="Enter email">
 
-<button class="btn" onclick="payNow(1)">Pay Now</button>
+<button class="btn" onclick="payNow(1)">Pay Securely</button>
+<div class="secure">🔒 Secure payment powered by Paystack</div>
 
-<!-- SWITCH BUTTON -->
-<button class="btn" style="margin-top:10px;background:#333" onclick="toggleMode('card1')">
-email US; globiaworld@gmail.com
-</button>
+<button class="btn-secondary">contact: info@globiaworld.com</button>
+
 </div>
 </div>
 
-<!-- ================= CARD 2 ================= -->
+<!-- CARD 2 -->
 <div class="card" id="card2">
 
 <div class="badge">🔥 Limited Offer</div>
@@ -255,16 +287,17 @@ email US; globiaworld@gmail.com
 </div>
 
 <div class="card-content">
+
 <h3>Youth Leadership Conference</h3>
 
 <p class="summary">
-Empowering youth through leadership, mentorship, and innovation.
+Empowering youth through leadership and innovation.
 </p>
 
 <ul class="benefits">
 <li>Leadership training</li>
-<li>Mentorship programs</li>
-<li>Networking events</li>
+<li>Mentorship</li>
+<li>Networking</li>
 <li>Career growth</li>
 </ul>
 
@@ -275,11 +308,11 @@ Empowering youth through leadership, mentorship, and innovation.
 
 <input id="email2" placeholder="Enter email">
 
-<button class="btn" onclick="payNow(2)">Pay Now</button>
+<button class="btn" onclick="payNow(2)">Pay Securely</button>
+<div class="secure">🔒 Secure payment powered by Paystack</div>
 
-<button class="btn" style="margin-top:10px;background:#333" onclick="toggleMode('card2')">
-email US; globiaworld@gmail.com
-</button>
+<button class="btn-secondary">contact: info@globiaworld.com</button>
+
 </div>
 </div>
 
@@ -290,36 +323,32 @@ email US; globiaworld@gmail.com
 
 <script>
 
-/* PAYMENT */
+/* PAYMENT - CARD + BANK ONLY */
 function payNow(type){
   let email = document.getElementById(type===1?"email1":"email2").value;
   let amount = document.getElementById(type===1?"ticket1":"ticket2").value;
 
   let handler = PaystackPop.setup({
-    key:"pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
-    email:email,
-    amount:amount*100,
-    currency:"KES",
-    callback:()=>alert("Payment successful")
+    key: "pk_test_f1a02bf2a0d437eeaff6995e005dd6dc74473780",
+    email: email,
+    amount: amount * 100,
+    currency: "KES",
+
+    // ✅ ONLY CARD + BANK TRANSFER
+    channels: ['card', 'bank'],
+
+    callback: function(response){
+      alert("Payment successful!");
+    }
   });
 
   handler.openIframe();
 }
 
-/* SOUND TOGGLE */
+/* SOUND */
 function toggleSound(id){
   let audio = document.getElementById("sound"+id);
-  if(audio.paused){
-    audio.play();
-  } else {
-    audio.pause();
-  }
-}
-
-/* SWITCH STATIC / ANIMATION MODE */
-function toggleMode(cardId){
-  let card = document.getElementById(cardId);
-  card.classList.toggle("static");
+  audio.paused ? audio.play() : audio.pause();
 }
 
 </script>
