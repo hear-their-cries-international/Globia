@@ -11,6 +11,7 @@
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
 import {
   getAuth,
   GoogleAuthProvider,
@@ -18,6 +19,20 @@ import {
   signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
 /* FIREBASE */
 const firebaseConfig = {
@@ -31,6 +46,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
 const provider = new GoogleAuthProvider();
 
 /* LOGIN */
@@ -55,11 +73,9 @@ onAuthStateChanged(auth, (user) => {
 
   if(user){
     document.body.classList.add("logged");
-
     document.getElementById("authBtn").style.display="none";
     document.getElementById("userBox").style.display="flex";
     document.getElementById("userEmail").innerText = user.email;
-
   } else {
     document.body.classList.remove("logged");
     document.getElementById("authBtn").style.display="block";
@@ -68,7 +84,7 @@ onAuthStateChanged(auth, (user) => {
 
 });
 
-/* CAREER MODAL */
+/* MODAL */
 window.openCareer = () => {
   document.getElementById("careerModal").style.display="flex";
 };
@@ -77,10 +93,58 @@ window.closeCareer = () => {
   document.getElementById("careerModal").style.display="none";
 };
 
+/* SUBMIT APPLICATION (REAL SYSTEM) */
+window.submitApplication = async () => {
+
+  const user = auth.currentUser;
+  if(!user){
+    alert("Please login first");
+    return;
+  }
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const position = document.getElementById("position").value;
+  const about = document.getElementById("about").value;
+  const file = document.getElementById("cv").files[0];
+
+  if(!name || !email || !file){
+    alert("Please fill all required fields");
+    return;
+  }
+
+  try{
+
+    /* UPLOAD CV */
+    const fileRef = ref(storage, "applications/" + Date.now() + "_" + file.name);
+    await uploadBytes(fileRef, file);
+    const fileURL = await getDownloadURL(fileRef);
+
+    /* SAVE TO FIRESTORE */
+    await addDoc(collection(db, "applications"), {
+      name,
+      email,
+      position,
+      about,
+      cv: fileURL,
+      userId: user.uid,
+      createdAt: serverTimestamp()
+    });
+
+    alert("Application submitted successfully!");
+    closeCareer();
+
+  }catch(e){
+    alert("Error: " + e.message);
+  }
+
+};
+
 </script>
 
 <style>
 
+/* SAME DESIGN (UNCHANGED) */
 body{
   margin:0;
   font-family:Segoe UI;
@@ -178,7 +242,7 @@ body.logged .topbar{
 .tourism{background:#0072ff;color:white}
 .career{background:#0f9d58;color:white}
 
-/* CAREER MODAL */
+/* MODAL */
 .modal{
   display:none;
   position:fixed;
@@ -273,13 +337,13 @@ body.logged .topbar{
   <div class="modalContent">
     <h2>Apply for a Job</h2>
 
-    <input type="text" placeholder="Full Name" required>
-    <input type="email" placeholder="Email Address" required>
-    <input type="text" placeholder="Position Applying For">
-    <textarea placeholder="Tell us about yourself"></textarea>
-    <input type="file">
+    <input id="name" type="text" placeholder="Full Name" required>
+    <input id="email" type="email" placeholder="Email Address" required>
+    <input id="position" type="text" placeholder="Position Applying For">
+    <textarea id="about" placeholder="Tell us about yourself"></textarea>
+    <input id="cv" type="file" required>
 
-    <button onclick="alert('Application submitted successfully!')">Submit Application</button>
+    <button onclick="submitApplication()">Submit Application</button>
     <br><br>
     <button onclick="closeCareer()" style="background:#999;">Close</button>
   </div>
